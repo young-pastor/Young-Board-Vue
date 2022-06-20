@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新增数据源配置"
+    title="新增数据源配置表"
     :width="900"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import { boardDataSourceAdd } from '@/api/modular/main/boardDatasource/boardDataSourceManage'
+  import { boardDataSourceAdd } from '@/api/modular/board/boardDatasource/boardDataSourceManage'
   export default {
     data () {
       return {

@@ -4,7 +4,7 @@ import { axios } from '@/utils/request'
  * 查询数据源配置表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourcePage (parameter) {
   return axios({
@@ -18,7 +18,7 @@ export function boardDataSourcePage (parameter) {
  * 数据源配置表列表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceList (parameter) {
   return axios({
@@ -32,7 +32,7 @@ export function boardDataSourceList (parameter) {
  * 添加数据源配置表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceAdd (parameter) {
   return axios({
@@ -46,7 +46,7 @@ export function boardDataSourceAdd (parameter) {
  * 编辑数据源配置表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceEdit (parameter) {
   return axios({
@@ -60,7 +60,7 @@ export function boardDataSourceEdit (parameter) {
  * 删除数据源配置表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceDelete (parameter) {
   return axios({
@@ -74,7 +74,7 @@ export function boardDataSourceDelete (parameter) {
  * 导出数据源配置表
  *
  * @author young-pastor
- * @date 2022-06-17 15:08:24
+ * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceExport (parameter) {
   return axios({

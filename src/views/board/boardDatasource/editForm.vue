@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="编辑数据源配置"
+    title="编辑数据源配置表"
     :width="900"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -56,71 +56,71 @@
 </template>
 
 <script>
-import { boardDataSourceEdit } from '@/api/modular/main/boardDatasource/boardDataSourceManage'
-export default {
-  data () {
-    return {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 15 }
-      },
-      visible: false,
-      confirmLoading: false,
-      form: this.$form.createForm(this)
-    }
-  },
-  methods: {
-    // 初始化方法
-    edit (record) {
-      this.visible = true
-      setTimeout(() => {
-        this.form.setFieldsValue(
-          {
-            id: record.id,
-            displayName: record.displayName,
-            group: record.group,
-            config: record.config,
-            type: record.type,
-            remark: record.remark
-          }
-        )
-      }, 100)
+  import { boardDataSourceEdit } from '@/api/modular/board/boardDatasource/boardDataSourceManage'
+  export default {
+    data () {
+      return {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 5 }
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 15 }
+        },
+        visible: false,
+        confirmLoading: false,
+        form: this.$form.createForm(this)
+      }
     },
-    handleSubmit () {
-      const { form: { validateFields } } = this
-      this.confirmLoading = true
-      validateFields((errors, values) => {
-        if (!errors) {
-          for (const key in values) {
-            if (typeof (values[key]) === 'object' && values[key] != null) {
-              values[key] = JSON.stringify(values[key])
+    methods: {
+      // 初始化方法
+      edit (record) {
+        this.visible = true
+        setTimeout(() => {
+          this.form.setFieldsValue(
+            {
+              id: record.id,
+              displayName: record.displayName,
+              group: record.group,
+              config: record.config,
+              type: record.type,
+              remark: record.remark
             }
-          }
-          boardDataSourceEdit(values).then((res) => {
-            if (res.success) {
-              this.$message.success('编辑成功')
+          )
+        }, 100)
+      },
+      handleSubmit () {
+        const { form: { validateFields } } = this
+        this.confirmLoading = true
+        validateFields((errors, values) => {
+          if (!errors) {
+            for (const key in values) {
+              if (typeof (values[key]) === 'object' && values[key] != null) {
+                values[key] = JSON.stringify(values[key])
+              }
+            }
+            boardDataSourceEdit(values).then((res) => {
+              if (res.success) {
+                this.$message.success('编辑成功')
+                this.confirmLoading = false
+                this.$emit('ok', values)
+                this.handleCancel()
+              } else {
+                this.$message.error('编辑失败')//  + res.message
+              }
+            }).finally((res) => {
               this.confirmLoading = false
-              this.$emit('ok', values)
-              this.handleCancel()
-            } else {
-              this.$message.error('编辑失败')//  + res.message
-            }
-          }).finally((res) => {
+            })
+          } else {
             this.confirmLoading = false
-          })
-        } else {
-          this.confirmLoading = false
-        }
-      })
-    },
-    handleCancel () {
-      this.form.resetFields()
-      this.visible = false
+          }
+        })
+      },
+      handleCancel () {
+        this.form.resetFields()
+        this.visible = false
+      }
     }
   }
-}
 </script>

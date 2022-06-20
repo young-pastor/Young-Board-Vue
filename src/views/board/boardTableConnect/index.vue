@@ -1,33 +1,23 @@
 <template>
   <div>
     <a-card :bordered="false" :bodyStyle="tstyle">
-      <div class="table-page-search-wrapper" v-if="hasPerm('boardDataSource:page')">
+      <div class="table-page-search-wrapper" v-if="hasPerm('boardTableConnect:page')">
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="数据源名称">
-                <a-input v-model="queryParam.displayName" allow-clear placeholder="请输入数据源名称"/>
+              <a-form-item label="字段ID">
+                <a-input v-model="queryParam.columnId" allow-clear placeholder="请输入字段ID"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item label="分组">
-                <a-input v-model="queryParam.group" allow-clear placeholder="请输入分组"/>
+              <a-form-item label="关联字段ID">
+                <a-input v-model="queryParam.connectColumnId" allow-clear placeholder="请输入关联字段ID"/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
               <a-col :md="8" :sm="24">
-                <a-form-item label="数据库配置">
-                  <a-input v-model="queryParam.config" allow-clear placeholder="请输入数据库配置"/>
-                </a-form-item>
-              </a-col>
-              <a-col :md="8" :sm="24">
-                <a-form-item label="数据库类型">
-                  <a-input v-model="queryParam.type" allow-clear placeholder="请输入数据库类型"/>
-                </a-form-item>
-              </a-col>
-              <a-col :md="8" :sm="24">
-                <a-form-item label="备注">
-                  <a-input v-model="queryParam.remark" allow-clear placeholder="请输入备注"/>
+                <a-form-item label="关联类型">
+                  <a-input v-model="queryParam.connectType" allow-clear placeholder="请输入关联类型"/>
                 </a-form-item>
               </a-col>
             </template>
@@ -54,19 +44,19 @@
         :rowKey="(record) => record.id"
         :rowSelection="options.rowSelection"
       >
-        <template class="table-operator" slot="operator" v-if="hasPerm('boardDataSource:add')" >
-          <a-button type="primary" v-if="hasPerm('boardDataSource:add')" icon="plus" @click="$refs.addForm.add()">新增数据源配置</a-button>
-          <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardDataSource:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
+        <template class="table-operator" slot="operator" v-if="hasPerm('boardTableConnect:add')" >
+          <a-button type="primary" v-if="hasPerm('boardTableConnect:add')" icon="plus" @click="$refs.addForm.add()">新增字段关联配置</a-button>
+          <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardTableConnect:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
-            v-if="hasPerm('boardDataSource:export')"
+            v-if="hasPerm('boardTableConnect:export')"
             ref="batchExport"
             @batchExport="batchExport"
           />
         </template>
         <span slot="action" slot-scope="text, record">
-          <a v-if="hasPerm('boardDataSource:edit')" @click="$refs.editForm.edit(record)">编辑</a>
-          <a-divider type="vertical" v-if="hasPerm('boardDataSource:edit') & hasPerm('boardDataSource:delete')"/>
-          <a-popconfirm v-if="hasPerm('boardDataSource:delete')" placement="topRight" title="确认删除？" @confirm="() => singleDelete(record)">
+          <a v-if="hasPerm('boardTableConnect:edit')" @click="$refs.editForm.edit(record)">编辑</a>
+          <a-divider type="vertical" v-if="hasPerm('boardTableConnect:edit') & hasPerm('boardTableConnect:delete')"/>
+          <a-popconfirm v-if="hasPerm('boardTableConnect:delete')" placement="topRight" title="确认删除？" @confirm="() => singleDelete(record)">
             <a>删除</a>
           </a-popconfirm>
         </span>
@@ -78,7 +68,7 @@
 </template>
 <script>
   import { STable, XDown } from '@/components'
-  import { boardDataSourcePage, boardDataSourceDelete, boardDataSourceExport } from '@/api/modular/main/boardDatasource/boardDataSourceManage'
+  import { boardTableConnectPage, boardTableConnectDelete, boardTableConnectExport } from '@/api/modular/board/boardTableConnect/boardTableConnectManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   export default {
@@ -97,35 +87,25 @@
         // 表头
         columns: [
           {
-            title: '数据源名称',
+            title: '字段ID',
             align: 'center',
-            dataIndex: 'displayName'
+            dataIndex: 'columnId'
           },
           {
-            title: '分组',
+            title: '关联字段ID',
             align: 'center',
-            dataIndex: 'group'
+            dataIndex: 'connectColumnId'
           },
           {
-            title: '数据库配置',
+            title: '关联类型',
             align: 'center',
-            dataIndex: 'config'
-          },
-          {
-            title: '数据库类型',
-            align: 'center',
-            dataIndex: 'type'
-          },
-          {
-            title: '备注',
-            align: 'center',
-            dataIndex: 'remark'
+            dataIndex: 'connectType'
           }
         ],
         tstyle: { 'padding-bottom': '0px', 'margin-bottom': '10px' },
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return boardDataSourcePage(Object.assign(parameter, this.queryParam)).then((res) => {
+          return boardTableConnectPage(Object.assign(parameter, this.queryParam)).then((res) => {
             return res.data
           })
         },
@@ -141,7 +121,7 @@
       }
     },
     created () {
-      if (this.hasPerm('boardDataSource:edit') || this.hasPerm('boardDataSource:delete')) {
+      if (this.hasPerm('boardTableConnect:edit') || this.hasPerm('boardTableConnect:delete')) {
         this.columns.push({
           title: '操作',
           width: '150px',
@@ -156,7 +136,7 @@
        */
       singleDelete (record) {
         const param = [{ 'id': record.id }]
-        this.boardDataSourceDelete(param)
+        this.boardTableConnectDelete(param)
       },
       /**
        * 批量删除
@@ -165,10 +145,10 @@
         const paramIds = this.selectedRowKeys.map((d) => {
             return { 'id': d }
         })
-        this.boardDataSourceDelete(paramIds)
+        this.boardTableConnectDelete(paramIds)
       },
-      boardDataSourceDelete (record) {
-        boardDataSourceDelete(record).then((res) => {
+      boardTableConnectDelete (record) {
+        boardTableConnectDelete(record).then((res) => {
           if (res.success) {
             this.$message.success('删除成功')
             this.$refs.table.clearRefreshSelected()
@@ -187,7 +167,7 @@
         const paramIds = this.selectedRowKeys.map((d) => {
             return { 'id': d }
         })
-        boardDataSourceExport(paramIds).then((res) => {
+        boardTableConnectExport(paramIds).then((res) => {
             this.$refs.batchExport.downloadfile(res)
         })
       },
