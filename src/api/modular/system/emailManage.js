@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 发送邮件
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function emailSendEmail (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function emailSendEmail (parameter) {
 /**
  * 发送html邮件
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function emailSendEmailHtml (parameter) {
   return axios({

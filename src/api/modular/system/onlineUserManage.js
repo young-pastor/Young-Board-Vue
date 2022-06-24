@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 在线用户列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOnlineUserList (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysOnlineUserList (parameter) {
 /**
  * 强制下线
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOnlineUserForceExist (parameter) {
   return axios({

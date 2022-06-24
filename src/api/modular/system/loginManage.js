@@ -1,14 +1,14 @@
 /**
  * 系统应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 import { axios } from '@/utils/request'
 
 /**
  * 登录
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function login (parameter) {
   // 密码采用sm2加密传输密码
@@ -27,7 +27,7 @@ export function login (parameter) {
 /**
  * 登出
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function logout (parameter) {
   return axios({
@@ -40,7 +40,7 @@ export function logout (parameter) {
 /**
  * 获取登录用户信息
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getLoginUser (parameter) {
   return axios({
@@ -53,7 +53,7 @@ export function getLoginUser (parameter) {
 /**
  * 获取租户开关
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getTenantOpen (parameter) {
   return axios({
@@ -66,7 +66,7 @@ export function getTenantOpen (parameter) {
 /**
  * 获取短信验证码
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getSmsCaptcha (parameter) {
   return axios({
@@ -79,7 +79,7 @@ export function getSmsCaptcha (parameter) {
 /**
  * 获取验证码开关
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getCaptchaOpen (parameter) {
   return axios({
@@ -92,7 +92,7 @@ export function getCaptchaOpen (parameter) {
 /**
  * 获取验证图片 以及token
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function reqGet(data) {
   return axios({
@@ -105,7 +105,7 @@ export function reqGet(data) {
 /**
  * 滑动或者点选验证
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function reqCheck(data) {
   return axios({

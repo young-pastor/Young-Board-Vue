@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询属性值
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValuePage (parameter) {
@@ -17,7 +17,7 @@ export function boardPropertyValuePage (parameter) {
 /**
  * 属性值列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValueList (parameter) {
@@ -31,7 +31,7 @@ export function boardPropertyValueList (parameter) {
 /**
  * 添加属性值
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValueAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardPropertyValueAdd (parameter) {
 /**
  * 编辑属性值
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValueEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardPropertyValueEdit (parameter) {
 /**
  * 删除属性值
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValueDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardPropertyValueDelete (parameter) {
 /**
  * 导出属性值
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 12:00:01
  */
 export function boardPropertyValueExport (parameter) {

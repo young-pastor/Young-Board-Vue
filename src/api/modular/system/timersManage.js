@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 分页查询定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysTimersPage (parameter) {
 /**
  * 获取全部定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersList (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysTimersList (parameter) {
 /**
  * 查看详情定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersDetail (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysTimersDetail (parameter) {
 /**
  * 添加定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersAdd (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysTimersAdd (parameter) {
 /**
  * 删除定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersDelete (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysTimersDelete (parameter) {
 /**
  * 编辑定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersEdit (parameter) {
   return axios({
@@ -81,7 +81,7 @@ export function sysTimersEdit (parameter) {
 /**
  * 获取系统的所有任务列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersGetActionClasses (parameter) {
   return axios({
@@ -94,7 +94,7 @@ export function sysTimersGetActionClasses (parameter) {
 /**
  * 启动定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersStart (parameter) {
   return axios({
@@ -107,7 +107,7 @@ export function sysTimersStart (parameter) {
 /**
  * 停止定时任务
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersStop (parameter) {
   return axios({

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取菜单列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @param parameter
  * @returns {*}
  */
@@ -18,7 +18,7 @@ export function getMenuList (parameter) {
 /**
  * 获取系统菜单树，用于新增，编辑时选择上级节点
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getMenuTree (parameter) {
   return axios({
@@ -31,7 +31,7 @@ export function getMenuTree (parameter) {
 /**
  * 增加菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMenuAdd (parameter) {
   return axios({
@@ -44,7 +44,7 @@ export function sysMenuAdd (parameter) {
 /**
  * 增加菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMenuDelete (parameter) {
   return axios({
@@ -57,7 +57,7 @@ export function sysMenuDelete (parameter) {
 /**
  * 查看菜单详情
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMenuDetail (parameter) {
   return axios({
@@ -70,7 +70,7 @@ export function sysMenuDetail (parameter) {
 /**
  * 编辑系统菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMenuEdit (parameter) {
   return axios({
@@ -83,7 +83,7 @@ export function sysMenuEdit (parameter) {
 /**
  * 获取系统菜单树，用于给角色授权时选择
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function SysMenuTreeForGrant (parameter) {
   return axios({
@@ -96,7 +96,7 @@ export function SysMenuTreeForGrant (parameter) {
 /**
  * 根据系统切换菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMenuChange (parameter) {
   return axios({

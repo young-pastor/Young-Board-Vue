@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询系统通知公告
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticePage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysNoticePage (parameter) {
 /**
  * 添加系统通知公告
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeAdd (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysNoticeAdd (parameter) {
 /**
  * 编辑系统通知公告
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeEdit (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysNoticeEdit (parameter) {
 /**
  * 删除系统通知公告
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeDelete (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysNoticeDelete (parameter) {
 /**
  * 通知公告详情
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeDetail (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysNoticeDetail (parameter) {
 /**
  * 修改状态
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeChangeStatus (parameter) {
   return axios({

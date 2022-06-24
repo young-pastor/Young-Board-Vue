@@ -1,14 +1,14 @@
 /**
  * 系统应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 import { axios } from '@/utils/request'
 
 /**
  * 系统应用列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getAppPage (parameter) {
   return axios({
@@ -21,7 +21,7 @@ export function getAppPage (parameter) {
 /**
  * 系统应用列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getAppList (parameter) {
   return axios({
@@ -34,7 +34,7 @@ export function getAppList (parameter) {
 /**
  * 新增系统应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysAppAdd (parameter) {
   return axios({
@@ -47,7 +47,7 @@ export function sysAppAdd (parameter) {
 /**
  * 编辑系统应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @param parameter
  * @returns {*}
  */
@@ -62,7 +62,7 @@ export function sysAppEdit (parameter) {
 /**
  * 删除系统应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysAppDelete (parameter) {
   return axios({
@@ -75,7 +75,7 @@ export function sysAppDelete (parameter) {
 /**
  * 设为默认应用
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysAppSetAsDefault (parameter) {
   return axios({

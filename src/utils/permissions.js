@@ -12,7 +12,7 @@ export function actionToObject (json) {
 /**
  * 控制按钮是否显示
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function hasBtnPermission (permission) {
   const myBtns = store.getters.buttons

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取区域列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @param parameter
  * @returns {*}
  */

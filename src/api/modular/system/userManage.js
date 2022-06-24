@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取用户列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getUserPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function getUserPage (parameter) {
 /**
  * 增加用户
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserAdd (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysUserAdd (parameter) {
 /**
  * 编辑用户
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserEdit (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysUserEdit (parameter) {
 /**
  * 获取用户详情
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserDetail (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysUserDetail (parameter) {
 /**
  * 删除用户
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserDelete (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysUserDelete (parameter) {
 /**
  * 导出用户
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserExport (parameter) {
   return axios({
@@ -82,7 +82,7 @@ export function sysUserExport (parameter) {
 /**
  * 拥有角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserOwnRole (parameter) {
   return axios({
@@ -95,7 +95,7 @@ export function sysUserOwnRole (parameter) {
 /**
  * 授权角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserGrantRole (parameter) {
   return axios({
@@ -108,7 +108,7 @@ export function sysUserGrantRole (parameter) {
 /**
  * 拥有数据
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserOwnData (parameter) {
   return axios({
@@ -121,7 +121,7 @@ export function sysUserOwnData (parameter) {
 /**
  * 授权数据
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserGrantData (parameter) {
   return axios({
@@ -134,7 +134,7 @@ export function sysUserGrantData (parameter) {
 /**
  * 修改状态
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserChangeStatus (parameter) {
   return axios({
@@ -147,7 +147,7 @@ export function sysUserChangeStatus (parameter) {
 /**
  * 重置密码
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserResetPwd (parameter) {
   return axios({
@@ -160,7 +160,7 @@ export function sysUserResetPwd (parameter) {
 /**
  * 修改密码
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserUpdatePwd (parameter) {
   return axios({
@@ -173,7 +173,7 @@ export function sysUserUpdatePwd (parameter) {
 /**
  * 用户选择器
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserSelector (parameter) {
   return axios({
@@ -186,7 +186,7 @@ export function sysUserSelector (parameter) {
 /**
  * 修改头像
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserUpdateAvatar (parameter) {
   return axios({
@@ -199,7 +199,7 @@ export function sysUserUpdateAvatar (parameter) {
 /**
  * 更新基本信息
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysUserUpdateInfo (parameter) {
   return axios({

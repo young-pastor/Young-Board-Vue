@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 系统属性监控
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysMachineQuery (parameter) {
   return axios({

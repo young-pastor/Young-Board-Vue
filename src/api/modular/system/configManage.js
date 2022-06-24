@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 分页查询配置列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysConfigPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysConfigPage (parameter) {
 /**
  * 添加系统参数配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysConfigAdd (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysConfigAdd (parameter) {
 /**
  * 编辑系统参数配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysConfigEdit (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysConfigEdit (parameter) {
 /**
  * 删除系统参数配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysConfigDelete (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysConfigDelete (parameter) {
 /**
  * 获取字典类型下所有字典，举例，返回格式为：[{code:"M",value:"男"},{code:"F",value:"女"}]
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysDictTypeDropDown (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysDictTypeDropDown (parameter) {
 /**
  * 获取系统的所有任务列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysTimersGetActionClasses (parameter) {
   return axios({

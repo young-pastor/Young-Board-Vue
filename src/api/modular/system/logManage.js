@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询访问日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysVisLogPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysVisLogPage (parameter) {
 /**
  * 查询操作日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOpLogPage (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysOpLogPage (parameter) {
 /**
  * 清空访问日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysVisLogDelete (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysVisLogDelete (parameter) {
 /**
  * 清空登录日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOpLogDelete (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysOpLogDelete (parameter) {
 /**
  * 导出登录日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysVisLogExport (parameter) {
   return axios({
@@ -69,7 +69,7 @@ export function sysVisLogExport (parameter) {
 /**
  * 导出操作日志
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOpLogExport (parameter) {
   return axios({

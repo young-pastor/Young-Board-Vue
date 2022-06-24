@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询数据字段配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnPage (parameter) {
@@ -17,7 +17,7 @@ export function boardTableColumnPage (parameter) {
 /**
  * 数据字段配置列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnList (parameter) {
@@ -31,7 +31,7 @@ export function boardTableColumnList (parameter) {
 /**
  * 添加数据字段配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardTableColumnAdd (parameter) {
 /**
  * 编辑数据字段配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardTableColumnEdit (parameter) {
 /**
  * 删除数据字段配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardTableColumnDelete (parameter) {
 /**
  * 导出数据字段配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:01
  */
 export function boardTableColumnExport (parameter) {

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询元事件分组
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupPage (parameter) {
@@ -17,7 +17,7 @@ export function boardEventGroupPage (parameter) {
 /**
  * 元事件分组列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupList (parameter) {
@@ -31,7 +31,7 @@ export function boardEventGroupList (parameter) {
 /**
  * 添加元事件分组
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardEventGroupAdd (parameter) {
 /**
  * 编辑元事件分组
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardEventGroupEdit (parameter) {
 /**
  * 删除元事件分组
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardEventGroupDelete (parameter) {
 /**
  * 导出元事件分组
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
 export function boardEventGroupExport (parameter) {

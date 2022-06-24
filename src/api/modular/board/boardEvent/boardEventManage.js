@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询元事件配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventPage (parameter) {
@@ -17,7 +17,7 @@ export function boardEventPage (parameter) {
 /**
  * 元事件配置列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventList (parameter) {
@@ -31,7 +31,7 @@ export function boardEventList (parameter) {
 /**
  * 添加元事件配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardEventAdd (parameter) {
 /**
  * 编辑元事件配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardEventEdit (parameter) {
 /**
  * 删除元事件配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardEventDelete (parameter) {
 /**
  * 导出元事件配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
 export function boardEventExport (parameter) {

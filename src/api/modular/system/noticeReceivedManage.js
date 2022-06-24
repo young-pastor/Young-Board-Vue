@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询我收到的系统通知公告
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysNoticeReceived (parameter) {
   return axios({

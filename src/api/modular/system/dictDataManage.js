@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询系统字典值
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysDictDataPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysDictDataPage (parameter) {
 /**
  * 添加系统字典值
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysDictDataAdd (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysDictDataAdd (parameter) {
 /**
  * 编辑系统字典值
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysDictDataEdit (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysDictDataEdit (parameter) {
 /**
  * 删除系统字典值
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysDictDataDelete (parameter) {
   return axios({

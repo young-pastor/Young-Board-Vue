@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取机构树
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getOrgTree (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function getOrgTree (parameter) {
 /**
  * 获取机构列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getOrgList (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function getOrgList (parameter) {
 /**
  * 获取机构列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getOrgPage (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function getOrgPage (parameter) {
 /**
  * 新增机构
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOrgAdd (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysOrgAdd (parameter) {
 /**
  * 编辑机构
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOrgEdit (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysOrgEdit (parameter) {
 /**
  * 删除机构
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOrgDelete (parameter) {
   return axios({
@@ -81,7 +81,7 @@ export function sysOrgDelete (parameter) {
 /**
  * 导出系统机构
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysOrgExport (parameter) {
   return axios({

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取缓存树
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheTree (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysCacheTree (parameter) {
 /**
  * 获取缓存树
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheValue (parameter) {
   return axios({
@@ -28,7 +28,7 @@ export function sysCacheValue (parameter) {
 /**
  * 新增缓存
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheAdd (parameter) {
   return axios({
@@ -41,7 +41,7 @@ export function sysCacheAdd (parameter) {
 /**
  * 编辑缓存
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheEdit (parameter) {
   return axios({
@@ -54,7 +54,7 @@ export function sysCacheEdit (parameter) {
 /**
  * 删除缓存
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheDelete (parameter) {
   return axios({
@@ -67,7 +67,7 @@ export function sysCacheDelete (parameter) {
 /**
  * 获取客户端信息
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCacheClientsInfo (parameter) {
   return axios({

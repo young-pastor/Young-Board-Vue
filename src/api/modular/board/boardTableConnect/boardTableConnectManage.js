@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询字段关联配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectPage (parameter) {
@@ -17,7 +17,7 @@ export function boardTableConnectPage (parameter) {
 /**
  * 字段关联配置列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectList (parameter) {
@@ -31,7 +31,7 @@ export function boardTableConnectList (parameter) {
 /**
  * 添加字段关联配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardTableConnectAdd (parameter) {
 /**
  * 编辑字段关联配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardTableConnectEdit (parameter) {
 /**
  * 删除字段关联配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardTableConnectDelete (parameter) {
 /**
  * 导出字段关联配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:52:07
  */
 export function boardTableConnectExport (parameter) {

@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 发送记录查询
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function smsPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function smsPage (parameter) {
 /**
  * 验证短信验证码
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysSendLoginMessage (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysSendLoginMessage (parameter) {
 /**
  * 验证短信验证码
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysValidateMessage (parameter) {
   return axios({

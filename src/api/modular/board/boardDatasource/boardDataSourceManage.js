@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询数据源配置表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourcePage (parameter) {
@@ -17,7 +17,7 @@ export function boardDataSourcePage (parameter) {
 /**
  * 数据源配置表列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceList (parameter) {
@@ -31,7 +31,7 @@ export function boardDataSourceList (parameter) {
 /**
  * 添加数据源配置表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceAdd (parameter) {
@@ -45,7 +45,7 @@ export function boardDataSourceAdd (parameter) {
 /**
  * 编辑数据源配置表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceEdit (parameter) {
@@ -59,7 +59,7 @@ export function boardDataSourceEdit (parameter) {
 /**
  * 删除数据源配置表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceDelete (parameter) {
@@ -73,7 +73,7 @@ export function boardDataSourceDelete (parameter) {
 /**
  * 导出数据源配置表
  *
- * @author young-pastor
+ * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
 export function boardDataSourceExport (parameter) {

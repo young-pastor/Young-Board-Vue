@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 获取角色列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function getRolePage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function getRolePage (parameter) {
 /**
  * 增加角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleAdd (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysRoleAdd (parameter) {
 /**
  * 编辑角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleEdit (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysRoleEdit (parameter) {
 /**
  * 删除角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleDelete (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysRoleDelete (parameter) {
 /**
  * 删除角色
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleDeteil (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysRoleDeteil (parameter) {
 /**
  * 获取授权角色列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleDropDown (parameter) {
   return axios({
@@ -81,7 +81,7 @@ export function sysRoleDropDown (parameter) {
 /**
  * 拥有菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleOwnMenu (parameter) {
   return axios({
@@ -94,7 +94,7 @@ export function sysRoleOwnMenu (parameter) {
 /**
  * 授权菜单
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleGrantMenu (parameter) {
   return axios({
@@ -107,7 +107,7 @@ export function sysRoleGrantMenu (parameter) {
 /**
  * 拥有数据
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleOwnData (parameter) {
   return axios({
@@ -120,7 +120,7 @@ export function sysRoleOwnData (parameter) {
 /**
  * 授权数据
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysRoleGrantData (parameter) {
   return axios({

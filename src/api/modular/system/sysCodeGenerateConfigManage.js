@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 代码生成详细配置列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCodeGenerateConfigList (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysCodeGenerateConfigList (parameter) {
 /**
  * 编辑代码生成详细配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysCodeGenerateConfigEdit (parameter) {
   return axios({

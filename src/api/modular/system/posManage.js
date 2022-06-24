@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 查询系统职位
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysPosPage (parameter) {
 /**
  * 系统职位列表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosList (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysPosList (parameter) {
 /**
  * 添加系统职位
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosAdd (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysPosAdd (parameter) {
 /**
  * 编辑系统职位
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosEdit (parameter) {
   return axios({
@@ -55,7 +55,7 @@ export function sysPosEdit (parameter) {
 /**
  * 删除系统职位
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosDelete (parameter) {
   return axios({
@@ -68,7 +68,7 @@ export function sysPosDelete (parameter) {
 /**
  * 导出系统职位
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysPosExport (parameter) {
   return axios({

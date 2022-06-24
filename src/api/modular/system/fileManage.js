@@ -3,7 +3,7 @@ import { axios } from '@/utils/request'
 /**
  * 分页查询文件信息表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoPage (parameter) {
   return axios({
@@ -16,7 +16,7 @@ export function sysFileInfoPage (parameter) {
 /**
  * 获取全部文件信息表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoList (parameter) {
   return axios({
@@ -29,7 +29,7 @@ export function sysFileInfoList (parameter) {
 /**
  * 上传文件
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoUpload (parameter) {
   return axios({
@@ -42,7 +42,7 @@ export function sysFileInfoUpload (parameter) {
 /**
  * 下载文件
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoDownload (parameter) {
   return axios({
@@ -56,7 +56,7 @@ export function sysFileInfoDownload (parameter) {
 /**
  * 查看图片
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoPreview (parameter) {
   return axios({
@@ -70,7 +70,7 @@ export function sysFileInfoPreview (parameter) {
 /**
  * 查看详情文件信息表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoDetail (parameter) {
   return axios({
@@ -83,7 +83,7 @@ export function sysFileInfoDetail (parameter) {
 /**
  * 删除文件信息表
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoDelete (parameter) {
   return axios({
@@ -96,7 +96,7 @@ export function sysFileInfoDelete (parameter) {
 /**
  * 获取在线文档配置
  *
- * @author young-pastor
+ * @author Young-Pastor
  */
 export function sysFileInfoGetOnlineConfig (parameter) {
   return axios({
