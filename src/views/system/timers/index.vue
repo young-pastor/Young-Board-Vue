@@ -201,7 +201,4 @@
   .table-operator {
     margin-bottom: 18px;
   }
-  button {
-    margin-right: 8px;
-  }
 </style>

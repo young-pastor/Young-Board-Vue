@@ -68,12 +68,13 @@
   </a-row>
 </template>
 <script>
-  import { STable, XCard, XDown } from '@/components'
-  import { Empty } from 'ant-design-vue'
-  import { getOrgPage, sysOrgDelete, getOrgTree, sysOrgExport } from '@/api/modular/system/orgManage'
-  import addForm from './addForm'
-  import editForm from './editForm'
-  export default {
+import {STable, XCard, XDown} from '@/components'
+import {Empty} from 'ant-design-vue'
+import {getOrgPage, getOrgTree, sysOrgDelete, sysOrgExport} from '@/api/modular/system/orgManage'
+import addForm from './addForm'
+import editForm from './editForm'
+
+export default {
     components: {
       XDown,
       XCard,
@@ -225,8 +226,5 @@
 <style lang="less">
   .table-operator {
     margin-bottom: 18px;
-  }
-  button {
-    margin-right: 8px;
   }
 </style>

@@ -50,12 +50,21 @@
         </a-form-item>
 
         <a-form-item
+          label="参数"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          has-feedback
+        >
+          <a-textarea :rows="6" placeholder="请输入参数" v-decorator="['param']"></a-textarea>
+        </a-form-item>
+
+        <a-form-item
           label="备注"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           has-feedback
         >
-          <a-textarea :rows="4" placeholder="请输入备注" v-decorator="['remark']"></a-textarea>
+          <a-textarea :rows="2" placeholder="请输入备注" v-decorator="['remark']"></a-textarea>
         </a-form-item>
 
       </a-form>

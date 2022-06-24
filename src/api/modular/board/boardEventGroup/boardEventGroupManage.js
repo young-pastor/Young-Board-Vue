@@ -6,6 +6,19 @@ import { axios } from '@/utils/request'
  * @author Young-Pastor
  * @date 2022-06-20 11:52:21
  */
+export function boardEventGroupTree (parameter) {
+  return axios({
+    url: '/boardEventGroup/tree',
+    method: 'get',
+    params: parameter
+  })
+}
+/**
+ * 查询元事件分组
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:21
+ */
 export function boardEventGroupPage (parameter) {
   return axios({
     url: '/boardEventGroup/page',
@@ -82,5 +95,19 @@ export function boardEventGroupExport (parameter) {
     method: 'get',
     params: parameter,
     responseType: 'blob'
+  })
+}
+
+/**
+ * 元事件分组列表
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:21
+ */
+export function boardEventGroupDetail (parameter) {
+  return axios({
+    url: '/boardEventGroup/detail',
+    method: 'get',
+    params: parameter
   })
 }

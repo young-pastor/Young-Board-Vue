@@ -9,7 +9,6 @@
             v-if="cacheKeyTree.length"
             :show-line="true"
             :show-icon="true"
-            checkable
             @select="handleClick"
             :style="{overflow:'hidden',overflowX:'scroll'}"/>
         </div>
@@ -30,7 +29,6 @@
             >
               <a-input placeholder="" v-model="cacheModel.key"/>
             </a-form-item>
-
 
             <a-form-item
               :labelCol="labelCol"
@@ -56,7 +54,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-textarea :rows="10" placeholder="请输入备注"  v-model="cacheModel.value"></a-textarea>
+              <a-textarea :rows="10" placeholder="请输入备注" v-model="cacheModel.value"></a-textarea>
             </a-form-item>
 
             <a-form-item
@@ -76,15 +74,15 @@
   </a-row>
 </template>
 <script>
-import {XCard, XDown} from '@/components'
-import {sysCacheTree, sysCacheValue, sysCacheAdd, sysCacheDelete, getDictData} from '@/api/modular/system/cacheManage'
-import {Empty} from "ant-design-vue";
+import { XCard, XDown } from '@/components'
+import { sysCacheTree, sysCacheValue, sysCacheAdd, sysCacheDelete } from '@/api/modular/system/cacheManage'
+import { Empty } from 'ant-design-vue'
 import moment from 'moment'
 
 export default {
   components: {
     XDown,
-    XCard,
+    XCard
   },
   data() {
     return {
@@ -116,7 +114,7 @@ export default {
      * 获取到机构树，展开顶级下树节点，考虑到后期数据量变大，不建议全部展开
      */
     getCacheTree() {
-      sysCacheTree(Object.assign(this.queryParam )).then(res => {
+      sysCacheTree(Object.assign(this.queryParam)).then(res => {
         this.treeLoading = false
         if (!res.success) {
           return
@@ -133,35 +131,35 @@ export default {
       })
     },
     handleClick(e) {
-      if (e.toString() != '') {
+      if (e.toString() !== '') {
         this.queryParam = {
           key: e.toString()
         }
       }
       sysCacheValue(this.queryParam).then(res => {
         this.cacheModel = res.data
-      });
+      })
     },
-    saveCache(){
-      sysCacheAdd(this.cacheModel).then(res=>{
+    saveCache() {
+      sysCacheAdd(this.cacheModel).then(res => {
         if (res.success) {
           this.$message.success('保存成功')
           this.queryParam = {}
           this.cacheKeyTree = []
-          this.getCacheTree();
-        }else{
+          this.getCacheTree()
+        } else {
           this.$message.success('保存失败')
         }
       })
     },
-    deleteCache(){
-      sysCacheDelete(this.cacheModel).then(res=>{
+    deleteCache() {
+      sysCacheDelete(this.cacheModel).then(res => {
         if (res.success) {
           this.$message.success('删除成功')
           this.queryParam = {}
           this.cacheKeyTree = []
-          this.getCacheTree();
-        }else{
+          this.getCacheTree()
+        } else {
           this.$message.success('删除失败')
         }
       })
@@ -172,9 +170,5 @@ export default {
 <style lang="less">
 .table-operator {
   margin-bottom: 18px;
-}
-
-button {
-  margin-right: 8px;
 }
 </style>
