@@ -116,3 +116,17 @@ export function sysTimersStop (parameter) {
     data: parameter
   })
 }
+
+/**
+ * 编辑定时任务
+ *
+ * @author yubaoshan
+ * @date 2020/7/3 03:23
+ */
+export function sysTimersExecute (parameter) {
+  return axios({
+    url: '/sysTimers/execute',
+    method: 'post',
+    data: parameter
+  })
+}

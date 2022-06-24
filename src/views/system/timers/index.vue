@@ -53,6 +53,11 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <a v-if="hasPerm('sysTimers:edit')" @click="$refs.editForm.edit(record)">编辑</a>
+
+          <a-divider type="vertical" v-if="hasPerm('sysTimers:execute')"/>
+          <a v-if="hasPerm('sysTimers:execute')" @click="$refs.executeForm.execute(record)">执行</a>
+          <a-divider type="vertical" v-if="hasPerm('sysTimers:queryLog') & hasPerm('sysTimers:queryLog')"/>
+          <a v-if="hasPerm('sysTimers:execute')" @click="$refs.logForm.queryLog(record)">日志</a>
           <a-divider type="vertical" v-if="hasPerm('sysTimers:edit') & hasPerm('sysTimers:delete')"/>
           <a-popconfirm v-if="hasPerm('sysTimers:delete')" placement="topRight" title="确认删除？" @confirm="() => sysTimersDelete(record)">
             <a>删除</a>
@@ -61,6 +66,8 @@
       </s-table>
       <add-form ref="addForm" @ok="handleOk" />
       <edit-form ref="editForm" @ok="handleOk" />
+      <execute-form ref="executeForm" @ok="handleOk" />
+      <log-form ref="logForm" @ok="handleOk" />
     </a-card>
   </div>
 </template>
@@ -69,6 +76,8 @@
   import { sysTimersPage, sysTimersDelete, sysTimersStart, sysTimersStop } from '@/api/modular/system/timersManage'
   import addForm from './addForm'
   import editForm from './editForm'
+  import executeForm from './executeForm'
+  import logForm from './logForm'
   export default {
     name: 'PosIndex',
     components: {
@@ -76,7 +85,9 @@
       STable,
       Ellipsis,
       addForm,
-      editForm
+      editForm,
+      executeForm,
+      logForm
     },
     data () {
       return {
@@ -122,7 +133,7 @@
       if (this.hasPerm('sysTimers:edit') || this.hasPerm('sysTimers:delete')) {
         this.columns.push({
           title: '操作',
-          width: '150px',
+          width: '200px',
           dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         })
