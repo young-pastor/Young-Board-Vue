@@ -55,7 +55,8 @@
         :rowSelection="options.rowSelection"
       >
         <template class="table-operator" slot="operator" v-if="hasPerm('boardTable:add')" >
-          <a-button type="primary" v-if="hasPerm('boardTable:add')" icon="plus" @click="$refs.addForm.add()">新增数据表配置</a-button>
+          <a-button type="primary" v-if="hasPerm('boardTable:add')" icon="plus" @click="$refs.addForm.add()">新增数据表</a-button>
+          <a-button type="primary" icon="sync" @click="$refs.syncForm.sync()">同步数据表</a-button>
           <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardTable:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
             v-if="hasPerm('boardTable:export')"
@@ -73,6 +74,7 @@
       </s-table>
       <add-form ref="addForm" @ok="handleOk" />
       <edit-form ref="editForm" @ok="handleOk" />
+      <sync-form ref="syncForm" @ok="handleOk" />
     </a-card>
   </div>
 </template>
@@ -81,11 +83,13 @@
   import { boardTablePage, boardTableDelete, boardTableExport } from '@/api/modular/board/boardTable/boardTableManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
+  import syncForm from './syncForm.vue'
   export default {
     components: {
       STable,
       addForm,
       editForm,
+      syncForm,
       XDown
     },
     data () {

@@ -28,7 +28,7 @@
             v-decorator="['pid', {rules: [{ required: true, message: '请选择上级分组！' }]}]"
             style="width: 100%"
             :dropdownStyle="{ maxHeight: '300px', overflow: 'auto' }"
-            :treeData="eventGroupTree"
+            :treeData="propertyGroupTree"
             placeholder="请选择上级分组"
             treeDefaultExpandAll
           >
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { boardEventGroupAdd, boardEventGroupTree } from '@/api/modular/board/boardEventGroup/boardEventGroupManage'
+import { boardPropertyGroupAdd, boardPropertyGroupTree } from '@/api/modular/board/boardPropertyGroup/boardPropertyGroupManage'
 
 export default {
   data() {
@@ -59,23 +59,23 @@ export default {
       visible: false,
       confirmLoading: false,
       form: this.$form.createForm(this),
-      eventGroupTree: []
+      propertyGroupTree: []
     }
   },
   methods: {
     // 初始化方法
     add(record) {
-      this.loadEventGroupTree()
+      this.loadPropertyGroupTree()
       this.visible = true
     },
 
-    loadEventGroupTree() {
-      boardEventGroupTree().then(res => {
+    loadPropertyGroupTree() {
+      boardPropertyGroupTree().then(res => {
         this.treeLoading = false
         if (!res.success) {
           return
         }
-        this.eventGroupTree = [{
+        this.propertyGroupTree = [{
           'id': '-1',
           'parentId': '0',
           'title': '顶级',
@@ -98,7 +98,7 @@ export default {
               values[key] = JSON.stringify(values[key])
             }
           }
-          boardEventGroupAdd(values).then((res) => {
+          boardPropertyGroupAdd(values).then((res) => {
             if (res.success) {
               this.$message.success('新增成功')
               this.confirmLoading = false

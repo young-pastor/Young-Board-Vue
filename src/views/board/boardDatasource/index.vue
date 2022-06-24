@@ -9,20 +9,12 @@
                 <a-input v-model="queryParam.displayName" allow-clear placeholder="请输入数据源名称"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="分组">
-                <a-input v-model="queryParam.group" allow-clear placeholder="请输入分组"/>
-              </a-form-item>
-            </a-col>
             <template v-if="advanced">
               <a-col :md="8" :sm="24">
-                <a-form-item label="数据库配置">
-                  <a-input v-model="queryParam.config" allow-clear placeholder="请输入数据库配置"/>
-                </a-form-item>
-              </a-col>
-              <a-col :md="8" :sm="24">
                 <a-form-item label="数据库类型">
-                  <a-input v-model="queryParam.type" allow-clear placeholder="请输入数据库类型"/>
+                  <a-select v-model="queryParam.type" allow-clear placeholder="请选择数据库类型" default-value="0">
+                    <a-select-option v-for="(item,index) in dataSourceTypeDictTypeDropDown" :key="index" :value="item.code" >{{ item.name }}</a-select-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :md="8" :sm="24">
@@ -77,11 +69,16 @@
   </div>
 </template>
 <script>
-  import { STable, XDown } from '@/components'
-  import { boardDataSourcePage, boardDataSourceDelete, boardDataSourceExport } from '@/api/modular/board/boardDatasource/boardDataSourceManage'
-  import addForm from './addForm.vue'
-  import editForm from './editForm.vue'
-  export default {
+import {STable, XDown} from '@/components'
+import {
+  boardDataSourceDelete,
+  boardDataSourceExport,
+  boardDataSourcePage
+} from '@/api/modular/board/boardDatasource/boardDataSourceManage'
+import addForm from './addForm.vue'
+import editForm from './editForm.vue'
+
+export default {
     components: {
       STable,
       addForm,
@@ -102,19 +99,20 @@
             dataIndex: 'displayName'
           },
           {
-            title: '分组',
+            title: '数据库类型',
             align: 'center',
-            dataIndex: 'group'
+            dataIndex: 'type'
           },
           {
             title: '数据库配置',
             align: 'center',
-            dataIndex: 'config'
-          },
-          {
-            title: '数据库类型',
-            align: 'center',
-            dataIndex: 'type'
+            dataIndex: 'config',
+            customRender:(text) => {
+              if(text && text.length > 20){
+                return text.substring(0,20) + "..."
+              }
+              return text
+            }
           },
           {
             title: '备注',
@@ -137,7 +135,8 @@
             selectedRowKeys: this.selectedRowKeys,
             onChange: this.onSelectChange
           }
-        }
+        },
+        dataSourceTypeDictTypeDropDown: []
       }
     },
     created () {
@@ -149,8 +148,12 @@
           scopedSlots: { customRender: 'action' }
         })
       }
+      this.sysDictTypeDropDown()
     },
     methods: {
+      sysDictTypeDropDown() {
+        this.dataSourceTypeDictTypeDropDown = this.$options.filters['dictData']('board_datasource_type')
+      },
       /**
        * 单个删除
        */

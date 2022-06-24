@@ -1,5 +1,42 @@
 <template>
-  <div>
+  <a-row :gutter="24">
+    <a-col :md="5" :sm="24">
+      <a-row :gutter="24">
+        <a-col :md="24" :sm="24">
+          <a-card :bordered="false" >
+            <span>分组</span>
+            <div :style="{ float: 'right', overflow: 'hidden' }">
+              <a-button-group>
+                <a-button icon="plus" size="small" @click="$refs.addGroupForm.add()"></a-button>
+                <a-button icon="edit" size="small" @click="editPropertyGroup"></a-button>
+                <a-button icon="sync" size="small" @click="loadPropertyGroupTree"></a-button>
+                <a-button type="danger" icon="delete" size="small" @click="deletePropertyGroup"></a-button>
+              </a-button-group>
+            </div>
+          </a-card>
+        </a-col>
+        <a-col :md="24" :sm="24">
+          <a-card :bordered="false" :loading="treeLoading">
+            <div v-if="this.propertyGroupTree!='' ">
+              <a-tree
+                style="scroll:true"
+                :treeData="propertyGroupTree"
+                v-if="propertyGroupTree.length"
+                :show-line="true"
+                :show-icon="true"
+                @select="selectPropertyGroup"
+                :style="{overflow:'hidden',overflowX:'scroll'}"
+                :replaceFields="replaceFields" />
+
+            </div>
+            <div v-else>
+              <a-empty :image="simpleImage"/>
+            </div>
+          </a-card>
+        </a-col>
+      </a-row>
+    </a-col>
+    <a-col :md="19" :sm="24">
     <a-card :bordered="false" :bodyStyle="tstyle">
       <div class="table-page-search-wrapper" v-if="hasPerm('boardProperty:page')">
         <a-form layout="inline">
@@ -7,11 +44,6 @@
             <a-col :md="8" :sm="24">
               <a-form-item label="属性名称">
                 <a-input v-model="queryParam.displayName" allow-clear placeholder="请输入属性名称"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="属性分组">
-                <a-input v-model="queryParam.propertyGorupId" allow-clear placeholder="请输入属性分组"/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
@@ -80,7 +112,7 @@
         :rowSelection="options.rowSelection"
       >
         <template class="table-operator" slot="operator" v-if="hasPerm('boardProperty:add')" >
-          <a-button type="primary" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.addForm.add()">新增属性配置</a-button>
+          <a-button type="primary" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.addForm.add()">新增属性</a-button>
           <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardProperty:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
             v-if="hasPerm('boardProperty:export')"
@@ -98,14 +130,26 @@
       </s-table>
       <add-form ref="addForm" @ok="handleOk" />
       <edit-form ref="editForm" @ok="handleOk" />
+      <add-group-form ref="addGroupForm" @ok="loadPropertyGroupTree" />
+      <edit-group-form ref="editGroupForm" @ok="loadPropertyGroupTree" />
     </a-card>
-  </div>
+
+    </a-col>
+    </a-row>
 </template>
 <script>
+  import {Empty} from 'ant-design-vue'
   import { STable, XDown } from '@/components'
+  import {
+    boardPropertyGroupDetail,
+    boardPropertyGroupDelete,
+    boardPropertyGroupTree
+  } from "@/api/modular/board/boardPropertyGroup/boardPropertyGroupManage"
   import { boardPropertyPage, boardPropertyDelete, boardPropertyExport } from '@/api/modular/board/boardProperty/boardPropertyManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
+  import addGroupForm from './addGroupForm.vue'
+  import editGroupForm from './editGroupForm.vue'
   export default {
     components: {
       STable,
@@ -115,6 +159,9 @@
     },
     data () {
       return {
+        propertyGroupTree: [],
+
+        treeLoading: true,
         // 高级搜索 展开/关闭
         advanced: false,
         // 查询参数
@@ -129,7 +176,7 @@
           {
             title: '属性分组',
             align: 'center',
-            dataIndex: 'propertyGorupId'
+            dataIndex: 'propertyGroupId'
           },
           {
             title: '表字段ID',
@@ -187,7 +234,8 @@
             selectedRowKeys: this.selectedRowKeys,
             onChange: this.onSelectChange
           }
-        }
+        },
+        simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
       }
     },
     created () {
@@ -199,8 +247,37 @@
           scopedSlots: { customRender: 'action' }
         })
       }
+      this.loadPropertyGroupTree()
     },
     methods: {
+      loadPropertyGroupTree() {
+        boardPropertyGroupTree(Object.assign(this.queryParam)).then(res => {
+          this.treeLoading = false
+          if (!res.success) {
+            this.propertyGroupTree = []
+            return
+          }
+          this.propertyGroupTree = res.data
+        })
+      },
+      selectPropertyGroup(e) {
+        this.queryParam.propertyGroupId = e.toString()
+      },
+      deletePropertyGroup() {
+        boardPropertyGroupDelete([{id:this.queryParam.propertyGroupId}]).then(res => {
+          if (res.success) {
+            this.$message.success('删除成功')
+            this.loadPropertyGroupTree();
+          }
+        })
+      },
+      editPropertyGroup() {
+        boardPropertyGroupDetail({id:this.queryParam.propertyGroupId}).then(res => {
+          if (res.success) {
+            this.$refs.editGroupForm.edit(res.data)
+          }
+        })
+      },
       /**
        * 单个删除
        */

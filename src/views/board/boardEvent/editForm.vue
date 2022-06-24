@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="编辑元事件配置"
+    title="编辑元事件"
     :width="900"
     :visible="visible"
     :confirmLoading="confirmLoading"

@@ -18,14 +18,18 @@
         >
           <a-input placeholder="请输入数据源名称" v-decorator="['displayName', {rules: [{required: true, message: '请输入数据源名称！'}]}]" />
         </a-form-item>
+
         <a-form-item
-          label="分组"
+          label="数据库类型"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           has-feedback
         >
-          <a-input placeholder="请输入分组" v-decorator="['group', {rules: [{required: true, message: '请输入分组！'}]}]" />
+          <a-select style="width: 100%" placeholder="请输入数据库类型" v-decorator="['type', {rules: [{ required: true, message: '请输入数据库类型！' }]}]" >
+            <a-select-option v-for="(item,index) in dataSourceTypeDictTypeDropDown" :key="index" :value="item.code" >{{ item.name }}</a-select-option>
+          </a-select>
         </a-form-item>
+
         <a-form-item
           label="数据库配置"
           :labelCol="labelCol"
@@ -35,20 +39,12 @@
           <a-input placeholder="请输入数据库配置" v-decorator="['config', {rules: [{required: true, message: '请输入数据库配置！'}]}]" />
         </a-form-item>
         <a-form-item
-          label="数据库类型"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          has-feedback
-        >
-          <a-input placeholder="请输入数据库类型" v-decorator="['type', {rules: [{required: true, message: '请输入数据库类型！'}]}]" />
-        </a-form-item>
-        <a-form-item
           label="备注"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           has-feedback
         >
-          <a-input placeholder="请输入备注" v-decorator="['remark', {rules: [{required: true, message: '请输入备注！'}]}]" />
+          <a-input placeholder="请输入备注" v-decorator="['remark']" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -70,7 +66,8 @@
         },
         visible: false,
         confirmLoading: false,
-        form: this.$form.createForm(this)
+        form: this.$form.createForm(this),
+        dataSourceTypeDictTypeDropDown: []
       }
     },
     methods: {
@@ -82,13 +79,16 @@
             {
               id: record.id,
               displayName: record.displayName,
-              group: record.group,
               config: record.config,
               type: record.type,
               remark: record.remark
             }
           )
         }, 100)
+        this.sysDictTypeDropDown()
+      },
+      sysDictTypeDropDown () {
+        this.dataSourceTypeDictTypeDropDown = this.$options.filters['dictData']('board_datasource_type')
       },
       handleSubmit () {
         const { form: { validateFields } } = this

@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新增数据表配置"
+    title="新增数据表"
     :width="900"
     :visible="visible"
     :confirmLoading="confirmLoading"

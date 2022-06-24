@@ -6,6 +6,20 @@ import { axios } from '@/utils/request'
  * @author Young-Pastor
  * @date 2022-06-20 11:59:55
  */
+export function boardPropertyGroupTree (parameter) {
+  return axios({
+    url: '/boardPropertyGroup/tree',
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 查询属性分组
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:59:55
+ */
 export function boardPropertyGroupPage (parameter) {
   return axios({
     url: '/boardPropertyGroup/page',
@@ -79,6 +93,21 @@ export function boardPropertyGroupDelete (parameter) {
 export function boardPropertyGroupExport (parameter) {
   return axios({
     url: '/boardPropertyGroup/export',
+    method: 'get',
+    params: parameter,
+    responseType: 'blob'
+  })
+}
+
+ /**
+ * 导出属性分组
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:59:55
+ */
+export function boardPropertyGroupDetail (parameter) {
+  return axios({
+    url: '/boardPropertyGroup/detail',
     method: 'get',
     params: parameter,
     responseType: 'blob'

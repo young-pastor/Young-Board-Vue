@@ -1,4 +1,4 @@
-import { axios } from '@/utils/request'
+import {axios} from '@/utils/request'
 
 /**
  * 查询数据表配置
@@ -6,7 +6,7 @@ import { axios } from '@/utils/request'
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTablePage (parameter) {
+export function boardTablePage(parameter) {
   return axios({
     url: '/boardTable/page',
     method: 'get',
@@ -20,7 +20,7 @@ export function boardTablePage (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTableList (parameter) {
+export function boardTableList(parameter) {
   return axios({
     url: '/boardTable/list',
     method: 'get',
@@ -34,7 +34,7 @@ export function boardTableList (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTableAdd (parameter) {
+export function boardTableAdd(parameter) {
   return axios({
     url: '/boardTable/add',
     method: 'post',
@@ -48,7 +48,7 @@ export function boardTableAdd (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTableEdit (parameter) {
+export function boardTableEdit(parameter) {
   return axios({
     url: '/boardTable/edit',
     method: 'post',
@@ -62,7 +62,7 @@ export function boardTableEdit (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTableDelete (parameter) {
+export function boardTableDelete(parameter) {
   return axios({
     url: '/boardTable/delete',
     method: 'post',
@@ -76,11 +76,25 @@ export function boardTableDelete (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:42
  */
-export function boardTableExport (parameter) {
+export function boardTableExport(parameter) {
   return axios({
     url: '/boardTable/export',
     method: 'get',
     params: parameter,
     responseType: 'blob'
+  })
+}
+
+/**
+ * 导出数据表配置
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:51:42
+ */
+export function boardTableSync(parameter) {
+  return axios({
+    url: '/boardTable/sync',
+    method: 'post',
+    data: parameter
   })
 }

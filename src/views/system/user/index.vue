@@ -226,7 +226,7 @@
        * 获取字典数据
        */
       sysDictTypeDropDown (text) {
-         sysDictTypeDropDown({ code: 'sex' }).then((res) => {
+        sysDictTypeDropDown({ code: 'sex' }).then((res) => {
            this.sexDictTypeDropDown = res.data
         })
         sysDictTypeDropDown({ code: 'common_status' }).then((res) => {

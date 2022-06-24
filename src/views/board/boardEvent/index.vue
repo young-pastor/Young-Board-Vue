@@ -42,11 +42,6 @@
           <a-form layout="inline">
             <a-row :gutter="48">
               <a-col :md="8" :sm="24">
-                <a-form-item label="事件分组">
-                  <a-input v-model="queryParam.eventGorupId" allow-clear placeholder="请输入事件分组"/>
-                </a-form-item>
-              </a-col>
-              <a-col :md="8" :sm="24">
                 <a-form-item label="事件名称">
                   <a-input v-model="queryParam.displayName" allow-clear placeholder="请输入事件名称"/>
                 </a-form-item>
@@ -97,7 +92,7 @@
           :rowSelection="options.rowSelection"
         >
           <template class="table-operator" slot="operator" v-if="hasPerm('boardEvent:add')">
-            <a-button type="primary" v-if="hasPerm('boardEvent:add')" icon="plus" @click="$refs.addForm.add()">新增元事件配置
+            <a-button type="primary" v-if="hasPerm('boardEvent:add')" icon="plus" @click="$refs.addForm.add()">新增元事件
             </a-button>
             <a-button
               type="danger"
@@ -244,10 +239,10 @@ export default {
       })
     },
     selectEventGroup(e) {
-      this.selectedEventGroup = e.toString()
+      this.queryParam.eventGorupId = e.toString()
     },
     deleteEventGroup() {
-      boardEventGroupDelete([{id:this.selectedEventGroup}]).then(res => {
+      boardEventGroupDelete([{id:this.queryParam.eventGorupId}]).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.loadEventGroupTree();
@@ -255,7 +250,7 @@ export default {
       })
     },
     editEventGroup() {
-      boardEventGroupDetail({id:this.selectedEventGroup}).then(res => {
+      boardEventGroupDetail({id:this.queryParam.eventGorupId}).then(res => {
         if (res.success) {
           this.$refs.editGroupForm.edit(res.data)
         }

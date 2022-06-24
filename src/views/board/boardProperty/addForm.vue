@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新增属性配置"
+    title="新增属性"
     :width="900"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -23,7 +23,7 @@
           :wrapperCol="wrapperCol"
           has-feedback
         >
-          <a-input placeholder="请输入属性分组" v-decorator="['propertyGorupId', {rules: [{required: true, message: '请输入属性分组！'}]}]" />
+          <a-input placeholder="请输入属性分组" v-decorator="['propertyGroupId', {rules: [{required: true, message: '请输入属性分组！'}]}]" />
         </a-form-item>
         <a-form-item
           label="表字段ID"
