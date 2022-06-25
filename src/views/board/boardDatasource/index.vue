@@ -55,6 +55,9 @@
             @batchExport="batchExport"
           />
         </template>
+        <span slot="type" slot-scope="text">
+           {{ typeFilter(text) }}
+        </span>
         <span slot="action" slot-scope="text, record">
           <a v-if="hasPerm('boardDataSource:edit')" @click="$refs.editForm.edit(record)">编辑</a>
           <a-divider type="vertical" v-if="hasPerm('boardDataSource:edit') & hasPerm('boardDataSource:delete')"/>
@@ -101,7 +104,8 @@ export default {
           {
             title: '数据库类型',
             align: 'center',
-            dataIndex: 'type'
+            dataIndex: 'type',
+            scopedSlots: { customRender: 'type' }
           },
           {
             title: '数据库配置',
@@ -153,6 +157,12 @@ export default {
     methods: {
       sysDictTypeDropDown() {
         this.dataSourceTypeDictTypeDropDown = this.$options.filters['dictData']('board_datasource_type')
+      },
+      typeFilter(t) {
+        const values = this.dataSourceTypeDictTypeDropDown.filter(item => item.code == t)
+        if (values.length > 0) {
+          return values[0].name
+        }
       },
       /**
        * 单个删除

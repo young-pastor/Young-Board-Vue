@@ -151,7 +151,6 @@ export default {
   data() {
     return {
       eventGroupTree: [],
-      selectedEventGroup: {},
       replaceFields: {
         key: 'id'
       },

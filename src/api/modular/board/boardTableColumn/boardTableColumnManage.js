@@ -84,3 +84,17 @@ export function boardTableColumnExport (parameter) {
     responseType: 'blob'
   })
 }
+
+/**
+ * 添加数据字段配置
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:01
+ */
+export function boardTableColumnSync (parameter) {
+  return axios({
+    url: '/boardTableColumn/sync',
+    method: 'post',
+    data: parameter
+  })
+}

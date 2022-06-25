@@ -5,8 +5,10 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="数据源ID">
-                <a-input v-model="queryParam.dataSourceId" allow-clear placeholder="请输入数据源ID"/>
+              <a-form-item label="数据源">
+                <a-select style="width: 100%" placeholder="请选择数据源" v-model="queryParam.dataSourceId" >
+                  <a-select-option v-for="(item,index) in dataSourceList" :key="index" :value="item.id" >{{ item.displayName }}</a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -56,7 +58,8 @@
       >
         <template class="table-operator" slot="operator" v-if="hasPerm('boardTable:add')" >
           <a-button type="primary" v-if="hasPerm('boardTable:add')" icon="plus" @click="$refs.addForm.add()">新增数据表</a-button>
-          <a-button type="primary" icon="sync" @click="$refs.syncForm.sync()">同步数据表</a-button>
+          <a-button type="primary" icon="tool" @click="$refs.connectForm.connect()">关联设置</a-button>
+          <a-button icon="sync" @click="$refs.syncForm.sync()">同步数据表</a-button>
           <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardTable:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
             v-if="hasPerm('boardTable:export')"
@@ -64,7 +67,12 @@
             @batchExport="batchExport"
           />
         </template>
+        <span slot="dataSource" slot-scope="text">
+           {{ dataSourceFilter(text) }}
+        </span>
         <span slot="action" slot-scope="text, record">
+          <a v-if="hasPerm('boardTable:edit')" @click="$refs.connectForm.connect(record)">关联</a>
+          <a-divider type="vertical" v-if="hasPerm('boardTable:edit') & hasPerm('boardTable:delete')"/>
           <a v-if="hasPerm('boardTable:edit')" @click="$refs.editForm.edit(record)">编辑</a>
           <a-divider type="vertical" v-if="hasPerm('boardTable:edit') & hasPerm('boardTable:delete')"/>
           <a-popconfirm v-if="hasPerm('boardTable:delete')" placement="topRight" title="确认删除？" @confirm="() => singleDelete(record)">
@@ -75,6 +83,7 @@
       <add-form ref="addForm" @ok="handleOk" />
       <edit-form ref="editForm" @ok="handleOk" />
       <sync-form ref="syncForm" @ok="handleOk" />
+      <connect-form ref="connectForm" @ok="handleOk" />
     </a-card>
   </div>
 </template>
@@ -84,12 +93,15 @@
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   import syncForm from './syncForm.vue'
+  import connectForm from './connectForm.vue'
+  import {boardDataSourceList} from "@/api/modular/board/boardDatasource/boardDataSourceManage";
   export default {
     components: {
       STable,
       addForm,
       editForm,
       syncForm,
+      connectForm,
       XDown
     },
     data () {
@@ -101,9 +113,9 @@
         // 表头
         columns: [
           {
-            title: '数据源ID',
+            title: '展示名称',
             align: 'center',
-            dataIndex: 'dataSourceId'
+            dataIndex: 'displayName'
           },
           {
             title: '表名称',
@@ -111,9 +123,10 @@
             dataIndex: 'tableName'
           },
           {
-            title: '展示名称',
+            title: '数据源',
             align: 'center',
-            dataIndex: 'displayName'
+            dataIndex: 'dataSourceId',
+            scopedSlots: { customRender: 'dataSource' }
           },
           {
             title: '刷新方式',
@@ -141,7 +154,8 @@
             selectedRowKeys: this.selectedRowKeys,
             onChange: this.onSelectChange
           }
-        }
+        },
+        dataSourceList: []
       }
     },
     created () {
@@ -153,8 +167,22 @@
           scopedSlots: { customRender: 'action' }
         })
       }
+      this.getDataSourceList()
     },
     methods: {
+      getDataSourceList() {
+        boardDataSourceList().then(res => {
+          if (res.success){
+            this.dataSourceList = res.data
+          }
+        })
+      },
+      dataSourceFilter (dId) {
+        const values = this.dataSourceList.filter(item => item.id == dId)
+        if (values.length > 0) {
+          return values[0].displayName
+        }
+      },
       /**
        * 单个删除
        */

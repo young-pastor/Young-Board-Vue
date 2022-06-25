@@ -155,12 +155,17 @@
       STable,
       addForm,
       editForm,
+      addGroupForm,
+      editGroupForm,
       XDown
     },
     data () {
       return {
         propertyGroupTree: [],
 
+        replaceFields: {
+          key: 'id'
+        },
         treeLoading: true,
         // 高级搜索 展开/关闭
         advanced: false,
@@ -276,6 +281,7 @@
           if (res.success) {
             this.$refs.editGroupForm.edit(res.data)
           }
+
         })
       },
       /**

@@ -109,7 +109,6 @@ export function boardPropertyGroupDetail (parameter) {
   return axios({
     url: '/boardPropertyGroup/detail',
     method: 'get',
-    params: parameter,
-    responseType: 'blob'
+    params: parameter
   })
 }
