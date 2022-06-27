@@ -27,9 +27,9 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-checkbox v-decorator="['syncTable']">表名称</a-checkbox>
-          <a-checkbox v-decorator="['syncColumn']">表字段</a-checkbox>
-          <a-checkbox v-decorator="['syncConnect']">表关联</a-checkbox>
+          <a-checkbox v-decorator="['syncTable', { valuePropName: 'checked' }]">表名称</a-checkbox>
+          <a-checkbox v-decorator="['syncColumn', { valuePropName: 'checked' }]">表字段</a-checkbox>
+          <a-checkbox v-decorator="['syncConnect', { valuePropName: 'checked' }]">表关联</a-checkbox>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -61,6 +61,15 @@ export default {
     // 初始化方法
     sync(record) {
       this.visible = true
+      setTimeout(() => {
+        this.form.setFieldsValue(
+          {
+            syncTable: true,
+            syncColumn: false,
+            syncConnect: false
+          }
+        )
+      }, 100)
       this.getDataSourceList()
     },
     getDataSourceList() {

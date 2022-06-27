@@ -164,7 +164,7 @@ export default {
         {
           title: '事件分组',
           align: 'center',
-          dataIndex: 'eventGorupId'
+          dataIndex: 'eventGroupId'
         },
         {
           title: '事件名称',
@@ -238,10 +238,10 @@ export default {
       })
     },
     selectEventGroup(e) {
-      this.queryParam.eventGorupId = e.toString()
+      this.queryParam.eventGroupId = e.toString()
     },
     deleteEventGroup() {
-      boardEventGroupDelete([{id:this.queryParam.eventGorupId}]).then(res => {
+      boardEventGroupDelete([{id:this.queryParam.eventGroupId}]).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
             this.loadEventGroupTree();
@@ -249,7 +249,7 @@ export default {
       })
     },
     editEventGroup() {
-      boardEventGroupDetail({id:this.queryParam.eventGorupId}).then(res => {
+      boardEventGroupDetail({id:this.queryParam.eventGroupId}).then(res => {
         if (res.success) {
           this.$refs.editGroupForm.edit(res.data)
         }

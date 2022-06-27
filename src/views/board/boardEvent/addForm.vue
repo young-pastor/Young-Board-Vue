@@ -15,7 +15,7 @@
           :wrapperCol="wrapperCol"
           has-feedback
         >
-          <a-input placeholder="请输入事件分组" v-decorator="['eventGorupId', {rules: [{required: true, message: '请输入事件分组！'}]}]" />
+          <a-input placeholder="请输入事件分组" v-decorator="['eventGroupId', {rules: [{required: true, message: '请输入事件分组！'}]}]" />
         </a-form-item>
         <a-form-item
           label="事件名称"
