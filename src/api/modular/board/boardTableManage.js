@@ -1,4 +1,4 @@
-import {axios} from '@/utils/request'
+import { axios } from '@/utils/request'
 
 /**
  * 查询数据表配置

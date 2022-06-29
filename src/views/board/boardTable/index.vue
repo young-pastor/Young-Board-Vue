@@ -89,12 +89,12 @@
 </template>
 <script>
   import { STable, XDown } from '@/components'
-  import { boardTablePage, boardTableDelete, boardTableExport } from '@/api/modular/board/boardTable/boardTableManage'
+  import { boardTablePage, boardTableDelete, boardTableExport } from '@/api/modular/board/boardTableManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   import syncForm from './syncForm.vue'
   import connectForm from './connectForm.vue'
-  import {boardDataSourceList} from "@/api/modular/board/boardDatasource/boardDataSourceManage";
+  import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
   export default {
     components: {
       STable,

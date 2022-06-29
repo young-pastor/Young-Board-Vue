@@ -21,7 +21,7 @@
             </a-col>
             <a-col :md="8" :sm="24">
               <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-              <a-button style="margin-left: 8px"  @click="() => queryLogParam = {}">重置</a-button>
+              <a-button style="margin-left: 8px" @click="() => queryLogParam = {}">重置</a-button>
             </a-col>
           </a-row>
         </a-form>

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { boardEventGroupAdd, boardEventGroupTree } from '@/api/modular/board/boardEventGroup/boardEventGroupManage'
+import { boardEventGroupAdd, boardEventGroupTree } from '@/api/modular/board/boardEventGroupManage'
 
 export default {
   data() {

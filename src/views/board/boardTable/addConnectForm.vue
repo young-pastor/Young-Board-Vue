@@ -88,9 +88,9 @@
 </template>
 
 <script>
-  import { boardTableConnectAdd } from '@/api/modular/board/boardTableConnect/boardTableConnectManage'
-  import { boardTableList } from '@/api/modular/board/boardTable/boardTableManage'
-  import { boardTableColumnList } from '@/api/modular/board/boardTableColumn/boardTableColumnManage'
+  import { boardTableConnectAdd } from '@/api/modular/board/boardTableConnectManage'
+  import { boardTableList } from '@/api/modular/board/boardTableManage'
+  import { boardTableColumnList } from '@/api/modular/board/boardTableColumnManage'
   export default {
     data () {
       return {

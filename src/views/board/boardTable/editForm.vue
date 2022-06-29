@@ -95,12 +95,12 @@
 
 <script>
 import { STable, Ellipsis, XCard } from '@/components'
-import {boardTableEdit} from '@/api/modular/board/boardTable/boardTableManage'
-import {boardDataSourceList} from "@/api/modular/board/boardDatasource/boardDataSourceManage";
+import {boardTableEdit} from '@/api/modular/board/boardTableManage'
+import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
 import {
   boardTableColumnDelete, boardTableColumnExport,
   boardTableColumnPage , boardTableColumnSync
-} from "@/api/modular/board/boardTableColumn/boardTableColumnManage";
+} from "@/api/modular/board/boardTableColumnManage";
 
 export default {
   name: 'editTableForm',

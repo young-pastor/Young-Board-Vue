@@ -132,8 +132,8 @@ import {
   boardEventGroupDetail,
   boardEventGroupDelete,
   boardEventGroupTree
-} from "@/api/modular/board/boardEventGroup/boardEventGroupManage"
-import {boardEventDelete, boardEventExport, boardEventPage} from '@/api/modular/board/boardEvent/boardEventManage'
+} from "@/api/modular/board/boardEventGroupManage"
+import {boardEventDelete, boardEventExport, boardEventPage} from '@/api/modular/board/boardEventManage'
 import addForm from './addForm.vue'
 import editForm from './editForm.vue'
 import addGroupForm from './addGroupForm.vue'

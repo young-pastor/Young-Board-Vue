@@ -123,12 +123,12 @@
 
 <script>
 import {STable, XCard} from '@/components'
-import {boardTableList} from '@/api/modular/board/boardTable/boardTableManage'
-import {boardTableColumnList} from "@/api/modular/board/boardTableColumn/boardTableColumnManage";
+import {boardTableList} from '@/api/modular/board/boardTableManage'
+import {boardTableColumnList} from "@/api/modular/board/boardTableColumnManage";
 import {
   boardTableConnectDelete,
   boardTableConnectPage
-} from "@/api/modular/board/boardTableConnect/boardTableConnectManage";
+} from "@/api/modular/board/boardTableConnectManage";
 import addConnectForm from './addConnectForm.vue'
 
 export default {

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import { boardPropertyValueAdd } from '@/api/modular/board/boardPropertyValue/boardPropertyValueManage'
+  import { boardPropertyValueAdd } from '@/api/modular/board/boardPropertyValueManage'
   export default {
     data () {
       return {

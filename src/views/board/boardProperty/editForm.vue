@@ -96,7 +96,7 @@
 </template>
 
 <script>
-  import { boardPropertyEdit } from '@/api/modular/board/boardProperty/boardPropertyManage'
+  import { boardPropertyEdit } from '@/api/modular/board/boardPropertyManage'
   export default {
     data () {
       return {

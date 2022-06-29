@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import { boardTableConnectEdit } from '@/api/modular/board/boardTableConnect/boardTableConnectManage'
+  import { boardTableConnectEdit } from '@/api/modular/board/boardTableConnectManage'
   export default {
     data () {
       return {

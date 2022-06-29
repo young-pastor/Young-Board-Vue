@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { boardPropertyGroupAdd, boardPropertyGroupTree } from '@/api/modular/board/boardPropertyGroup/boardPropertyGroupManage'
+import { boardPropertyGroupAdd, boardPropertyGroupTree } from '@/api/modular/board/boardPropertyGroupManage'
 
 export default {
   data() {

@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import {boardTableAdd} from '@/api/modular/board/boardTable/boardTableManage'
-import {boardDataSourceList} from "@/api/modular/board/boardDatasource/boardDataSourceManage";
+import {boardTableAdd} from '@/api/modular/board/boardTableManage'
+import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
 
 export default {
   data() {

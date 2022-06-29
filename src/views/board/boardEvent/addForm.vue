@@ -63,7 +63,7 @@
 </template>
 
 <script>
-  import { boardEventAdd } from '@/api/modular/board/boardEvent/boardEventManage'
+  import { boardEventAdd } from '@/api/modular/board/boardEventManage'
   export default {
     data () {
       return {

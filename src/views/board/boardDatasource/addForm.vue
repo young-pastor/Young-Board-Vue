@@ -52,7 +52,7 @@
 </template>
 
 <script>
-  import { boardDataSourceAdd } from '@/api/modular/board/boardDatasource/boardDataSourceManage'
+  import { boardDataSourceAdd } from '@/api/modular/board/boardDataSourceManage'
   export default {
     data () {
       return {

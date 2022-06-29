@@ -56,7 +56,7 @@
           />
         </template>
         <span slot="type" slot-scope="text">
-           {{ typeFilter(text) }}
+          {{ typeFilter(text) }}
         </span>
         <span slot="action" slot-scope="text, record">
           <a v-if="hasPerm('boardDataSource:edit')" @click="$refs.editForm.edit(record)">编辑</a>
@@ -72,12 +72,12 @@
   </div>
 </template>
 <script>
-import {STable, XDown} from '@/components'
+import { STable, XDown } from '@/components'
 import {
   boardDataSourceDelete,
   boardDataSourceExport,
   boardDataSourcePage
-} from '@/api/modular/board/boardDatasource/boardDataSourceManage'
+} from '@/api/modular/board/boardDataSourceManage'
 import addForm from './addForm.vue'
 import editForm from './editForm.vue'
 
@@ -112,8 +112,8 @@ export default {
             align: 'center',
             dataIndex: 'config',
             customRender:(text) => {
-              if(text && text.length > 20){
-                return text.substring(0,20) + "..."
+              if(text && text.length > 20) {
+                return text.substring(0, 20) + '...'
               }
               return text
             }
@@ -159,7 +159,7 @@ export default {
         this.dataSourceTypeDictTypeDropDown = this.$options.filters['dictData']('board_datasource_type')
       },
       typeFilter(t) {
-        const values = this.dataSourceTypeDictTypeDropDown.filter(item => item.code == t)
+        const values = this.dataSourceTypeDictTypeDropDown.filter(item => item.code === t)
         if (values.length > 0) {
           return values[0].name
         }

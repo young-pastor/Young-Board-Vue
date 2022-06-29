@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import {boardTableSync} from '@/api/modular/board/boardTable/boardTableManage'
-import {boardDataSourceList} from '@/api/modular/board/boardDatasource/boardDataSourceManage'
+import {boardTableSync} from '@/api/modular/board/boardTableManage'
+import {boardDataSourceList} from '@/api/modular/board/boardDataSourceManage'
 
 export default {
   data() {

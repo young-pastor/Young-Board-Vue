@@ -35,7 +35,7 @@
 </template>
 <script>
   import { STable, XDown } from '@/components'
-  import { boardPropertyValuePage, boardPropertyValueDelete, boardPropertyValueExport } from '@/api/modular/board/boardPropertyValue/boardPropertyValueManage'
+  import { boardPropertyValuePage, boardPropertyValueDelete, boardPropertyValueExport } from '@/api/modular/board/boardPropertyValueManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   export default {

@@ -144,8 +144,8 @@
     boardPropertyGroupDetail,
     boardPropertyGroupDelete,
     boardPropertyGroupTree
-  } from "@/api/modular/board/boardPropertyGroup/boardPropertyGroupManage"
-  import { boardPropertyPage, boardPropertyDelete, boardPropertyExport } from '@/api/modular/board/boardProperty/boardPropertyManage'
+  } from "@/api/modular/board/boardPropertyGroupManage"
+  import { boardPropertyPage, boardPropertyDelete, boardPropertyExport } from '@/api/modular/board/boardPropertyManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   import addGroupForm from './addGroupForm.vue'
