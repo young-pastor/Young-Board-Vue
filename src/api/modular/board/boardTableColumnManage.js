@@ -1,5 +1,12 @@
 import { axios } from '@/utils/request'
 
+export function boardTableColumnTree (parameter) {
+  return axios({
+    url: '/boardTableColumn/tree',
+    method: 'get',
+    params: parameter
+  })
+}
 /**
  * 查询数据字段配置
  *
