@@ -99,7 +99,7 @@
               :disabled="selectedRowKeys.length < 1"
               v-if="hasPerm('boardEvent:delete')"
               @click="batchDelete">
-                 <a-icon type="delete"/>
+              <a-icon type="delete"/>
               批量删除
             </a-button>
             <x-down
@@ -108,14 +108,27 @@
               @batchExport="batchExport"
             />
           </template>
+          <span slot="eventGroup" slot-scope="text">
+            {{ eventGroupFilter(text) }}
+          </span>
+          <span slot="dataSource" slot-scope="text">
+            {{ dataSourceFilter(text) }}
+          </span>
+          <span slot="table" slot-scope="text">
+            {{ tableFilter(text) }}
+          </span>
+          <span slot="tableColumn" slot-scope="text">
+            {{ tableColumnFilter(text) }}
+          </span>
+
           <span slot="action" slot-scope="text, record">
-          <a v-if="hasPerm('boardEvent:edit')" @click="$refs.editForm.edit(record)">编辑</a>
-          <a-divider type="vertical" v-if="hasPerm('boardEvent:edit') & hasPerm('boardEvent:delete')"/>
-          <a-popconfirm v-if="hasPerm('boardEvent:delete')" placement="topRight" title="确认删除？"
-                        @confirm="() => singleDelete(record)">
-            <a>删除</a>
-          </a-popconfirm>
-        </span>
+            <a v-if="hasPerm('boardEvent:edit')" @click="$refs.editForm.edit(record)">编辑</a>
+            <a-divider type="vertical" v-if="hasPerm('boardEvent:edit') & hasPerm('boardEvent:delete')"/>
+            <a-popconfirm v-if="hasPerm('boardEvent:delete')" placement="topRight" title="确认删除？"
+                          @confirm="() => singleDelete(record)">
+              <a>删除</a>
+            </a-popconfirm>
+          </span>
         </s-table>
         <add-form ref="addForm" @ok="handleOk"/>
         <edit-form ref="editForm" @ok="handleOk"/>
@@ -131,13 +144,17 @@ import {STable, XDown} from '@/components'
 import {
   boardEventGroupDetail,
   boardEventGroupDelete,
-  boardEventGroupTree
+  boardEventGroupTree,
+  boardEventGroupList
 } from "@/api/modular/board/boardEventGroupManage"
 import {boardEventDelete, boardEventExport, boardEventPage} from '@/api/modular/board/boardEventManage'
 import addForm from './addForm.vue'
 import editForm from './editForm.vue'
 import addGroupForm from './addGroupForm.vue'
 import editGroupForm from './editGroupForm.vue'
+import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
+import {boardTableList} from "@/api/modular/board/boardTableManage";
+import {boardTableColumnList} from "@/api/modular/board/boardTableColumnManage";
 
 export default {
   components: {
@@ -150,7 +167,6 @@ export default {
   },
   data() {
     return {
-      eventGroupTree: [],
       replaceFields: {
         key: 'id'
       },
@@ -162,19 +178,33 @@ export default {
       // 表头
       columns: [
         {
-          title: '事件分组',
-          align: 'center',
-          dataIndex: 'eventGroupId'
-        },
-        {
           title: '事件名称',
           align: 'center',
           dataIndex: 'displayName'
         },
         {
-          title: '表字段ID',
+          title: '事件分组',
           align: 'center',
-          dataIndex: 'tableColumnId'
+          dataIndex: 'eventGroupId',
+          scopedSlots: { customRender: 'eventGroup' }
+        },
+        {
+          title: '数据源',
+          align: 'center',
+          dataIndex: 'dataSourceId',
+          scopedSlots: { customRender: 'dataSource' }
+        },
+        {
+          title: '数据表',
+          align: 'center',
+          dataIndex: 'tableId',
+          scopedSlots: { customRender: 'table' }
+        },
+        {
+          title: '表字段',
+          align: 'center',
+          dataIndex: 'tableColumnId',
+          scopedSlots: { customRender: 'tableColumn' }
         },
         {
           title: '计算方式',
@@ -213,6 +243,13 @@ export default {
         }
       },
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
+      eventGroupList: [],
+      eventGroupTree: [],
+      dataSourceDropDown: [],
+      tableList: [],
+      tableDropDown: [],
+      columnList: [],
+      columnDropDown: []
     }
   },
   created() {
@@ -242,16 +279,53 @@ export default {
         }
         this.eventGroupTree[0]['children'] = res.data
       })
+
+      boardEventGroupList().then(res => {
+        this.eventGroupList = res.data
+      })
+      boardDataSourceList().then(res => {
+        this.dataSourceDropDown = res.data
+      })
+      boardTableList().then(res => {
+        this.tableList = res.data
+      })
+      boardTableColumnList().then(res => {
+        this.columnList = res.data
+      })
+    },
+    eventGroupFilter(t) {
+      const values = this.eventGroupList.filter(item => item.id === t)
+      if (values.length > 0) {
+        return values[0].displayName
+      }
+    },
+    dataSourceFilter(t) {
+      const values = this.dataSourceDropDown.filter(item => item.id === t)
+      if (values.length > 0) {
+        return values[0].displayName
+      }
+    },
+    tableFilter(t) {
+      const values = this.tableList.filter(item => item.id === t)
+      if (values.length > 0) {
+        return values[0].displayName
+      }
+    },
+    tableColumnFilter(t) {
+      const values = this.columnList.filter(item => item.id === t)
+      if (values.length > 0) {
+        return values[0].displayName
+      }
     },
     selectEventGroup(e) {
       this.queryParam.eventGroupId = e.toString()
     },
     deleteEventGroup() {
       boardEventGroupDelete([{id:this.queryParam.eventGroupId}]).then(res => {
-          if (res.success) {
-            this.$message.success('删除成功')
-            this.loadEventGroupTree();
-          }
+        if (res.success) {
+          this.$message.success('删除成功')
+          this.loadEventGroupTree();
+        }
       })
     },
     editEventGroup() {
