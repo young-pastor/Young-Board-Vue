@@ -230,11 +230,17 @@ export default {
     loadEventGroupTree() {
       boardEventGroupTree(Object.assign(this.queryParam)).then(res => {
         this.treeLoading = false
+        this.eventGroupTree = [{
+          'id': '-1',
+          'parentId': '0',
+          'title': '顶级',
+          'value': '0',
+          'pid': '0'
+        }]
         if (!res.success) {
-          this.eventGroupTree = []
           return
         }
-        this.eventGroupTree = res.data
+        this.eventGroupTree[0]['children'] = res.data
       })
     },
     selectEventGroup(e) {

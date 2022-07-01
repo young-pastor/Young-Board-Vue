@@ -258,11 +258,17 @@
       loadPropertyGroupTree() {
         boardPropertyGroupTree(Object.assign(this.queryParam)).then(res => {
           this.treeLoading = false
+          this.propertyGroupTree = [{
+            'id': '-1',
+            'parentId': '0',
+            'title': '顶级',
+            'value': '0',
+            'pid': '0'
+          }]
           if (!res.success) {
-            this.propertyGroupTree = []
             return
           }
-          this.propertyGroupTree = res.data
+          this.propertyGroupTree[0]['children'] = res.data
         })
       },
       selectPropertyGroup(e) {
