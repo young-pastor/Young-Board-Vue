@@ -120,6 +120,18 @@
             @batchExport="batchExport"
           />
         </template>
+        <span slot="propertyGroup" slot-scope="text">
+            {{ propertyGroupFilter(text) }}
+          </span>
+        <span slot="dataSource" slot-scope="text">
+            {{ dataSourceFilter(text) }}
+          </span>
+        <span slot="table" slot-scope="text">
+            {{ tableFilter(text) }}
+          </span>
+        <span slot="tableColumn" slot-scope="text">
+            {{ tableColumnFilter(text) }}
+          </span>
         <span slot="action" slot-scope="text, record">
           <a v-if="hasPerm('boardProperty:edit')" @click="$refs.editForm.edit(record)">编辑</a>
           <a-divider type="vertical" v-if="hasPerm('boardProperty:edit') & hasPerm('boardProperty:delete')"/>
@@ -143,13 +155,17 @@
   import {
     boardPropertyGroupDetail,
     boardPropertyGroupDelete,
-    boardPropertyGroupTree
+    boardPropertyGroupTree,
+    boardPropertyGroupList
   } from "@/api/modular/board/boardPropertyGroupManage"
   import { boardPropertyPage, boardPropertyDelete, boardPropertyExport } from '@/api/modular/board/boardPropertyManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   import addGroupForm from './addGroupForm.vue'
   import editGroupForm from './editGroupForm.vue'
+  import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
+  import {boardTableList} from "@/api/modular/board/boardTableManage";
+  import {boardTableColumnList} from "@/api/modular/board/boardTableColumnManage";
   export default {
     components: {
       STable,
@@ -161,7 +177,6 @@
     },
     data () {
       return {
-        propertyGroupTree: [],
 
         replaceFields: {
           key: 'id'
@@ -181,12 +196,26 @@
           {
             title: '属性分组',
             align: 'center',
-            dataIndex: 'propertyGroupId'
+            dataIndex: 'propertyGroupId',
+            scopedSlots: { customRender: 'propertyGroup' }
           },
           {
-            title: '表字段ID',
+            title: '数据源',
             align: 'center',
-            dataIndex: 'tableColumnId'
+            dataIndex: 'dataSourceId',
+            scopedSlots: { customRender: 'dataSource' }
+          },
+          {
+            title: '数据表',
+            align: 'center',
+            dataIndex: 'tableId',
+            scopedSlots: { customRender: 'table' }
+          },
+          {
+            title: '表字段',
+            align: 'center',
+            dataIndex: 'tableColumnId',
+            scopedSlots: { customRender: 'tableColumn' }
           },
           {
             title: '计算方式',
@@ -241,6 +270,13 @@
           }
         },
         simpleImage: Empty.PRESENTED_IMAGE_SIMPLE,
+        propertyGroupList: [],
+        propertyGroupTree: [],
+        dataSourceDropDown: [],
+        tableList: [],
+        tableDropDown: [],
+        columnList: [],
+        columnDropDown: []
       }
     },
     created () {
@@ -270,6 +306,43 @@
           }
           this.propertyGroupTree[0]['children'] = res.data
         })
+        boardPropertyGroupList().then(res => {
+          this.propertyGroupList = res.data
+        })
+        boardDataSourceList().then(res => {
+          this.dataSourceDropDown = res.data
+        })
+        boardTableList().then(res => {
+          this.tableList = res.data
+        })
+        boardTableColumnList().then(res => {
+          this.columnList = res.data
+        })
+      },
+
+      propertyGroupFilter(t) {
+        const values = this.propertyGroupList.filter(item => item.id === t)
+        if (values.length > 0) {
+          return values[0].displayName
+        }
+      },
+      dataSourceFilter(t) {
+        const values = this.dataSourceDropDown.filter(item => item.id === t)
+        if (values.length > 0) {
+          return values[0].displayName
+        }
+      },
+      tableFilter(t) {
+        const values = this.tableList.filter(item => item.id === t)
+        if (values.length > 0) {
+          return values[0].displayName
+        }
+      },
+      tableColumnFilter(t) {
+        const values = this.columnList.filter(item => item.id === t)
+        if (values.length > 0) {
+          return values[0].displayName
+        }
       },
       selectPropertyGroup(e) {
         this.queryParam.propertyGroupId = e.toString()
@@ -289,6 +362,7 @@
           }
 
         })
+
       },
       /**
        * 单个删除

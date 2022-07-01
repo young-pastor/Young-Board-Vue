@@ -139,7 +139,6 @@ export default {
       confirmLoading: false,
       form: this.$form.createForm(this),
       eventGroupTree: [],
-      dataSourceList: [],
       dataSourceDropDown: [],
       tableList: [],
       tableDropDown: [],
