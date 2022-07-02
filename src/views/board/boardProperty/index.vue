@@ -150,22 +150,22 @@
     </a-row>
 </template>
 <script>
-  import {Empty} from 'ant-design-vue'
+  import { Empty } from 'ant-design-vue'
   import { STable, XDown } from '@/components'
   import {
     boardPropertyGroupDetail,
     boardPropertyGroupDelete,
     boardPropertyGroupTree,
     boardPropertyGroupList
-  } from "@/api/modular/board/boardPropertyGroupManage"
+  } from '@/api/modular/board/boardPropertyGroupManage'
   import { boardPropertyPage, boardPropertyDelete, boardPropertyExport } from '@/api/modular/board/boardPropertyManage'
   import addForm from './addForm.vue'
   import editForm from './editForm.vue'
   import addGroupForm from './addGroupForm.vue'
   import editGroupForm from './editGroupForm.vue'
-  import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
-  import {boardTableList} from "@/api/modular/board/boardTableManage";
-  import {boardTableColumnList} from "@/api/modular/board/boardTableColumnManage";
+  import { boardDataSourceList } from '@/api/modular/board/boardDataSourceManage'
+  import { boardTableList } from '@/api/modular/board/boardTableManage'
+  import { boardTableColumnList } from '@/api/modular/board/boardTableColumnManage'
   export default {
     components: {
       STable,
@@ -348,21 +348,19 @@
         this.queryParam.propertyGroupId = e.toString()
       },
       deletePropertyGroup() {
-        boardPropertyGroupDelete([{id:this.queryParam.propertyGroupId}]).then(res => {
+        boardPropertyGroupDelete([ { id: this.queryParam.propertyGroupId } ]).then(res => {
           if (res.success) {
             this.$message.success('删除成功')
-            this.loadPropertyGroupTree();
+            this.loadPropertyGroupTree()
           }
         })
       },
       editPropertyGroup() {
-        boardPropertyGroupDetail({id:this.queryParam.propertyGroupId}).then(res => {
+        boardPropertyGroupDetail({ id: this.queryParam.propertyGroupId }).then(res => {
           if (res.success) {
             this.$refs.editGroupForm.edit(res.data)
           }
-
         })
-
       },
       /**
        * 单个删除
