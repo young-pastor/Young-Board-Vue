@@ -181,10 +181,10 @@
        * 默认选中项
        */
       selectedByDefault () {
-        this.form.getFieldDecorator('authorName', { initialValue: 'young-pastor' })
-        this.form.getFieldDecorator('packageName', { initialValue: 'com.zhisida.board' })
-        this.form.getFieldDecorator('tablePrefix', { valuePropName: 'checked', initialValue: 'Y' })
-        this.form.getFieldDecorator('generateType', { valuePropName: 'checked', initialValue: '1' })
+        this.form.getFieldDecorator('authorName', { initialValue: 'Young-Pastor' })
+        this.form.getFieldDecorator('packageName', { initialValue: 'com.zhisida' })
+        this.form.getFieldDecorator('tablePrefix', { valuePropName: 'checked', initialValue: 'N' })
+        this.form.getFieldDecorator('generateType', { valuePropName: 'checked', initialValue: '0' })
         this.tablePrefixValue = 'N'
       },
       /**
