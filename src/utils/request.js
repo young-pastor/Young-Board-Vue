@@ -48,6 +48,7 @@ service.interceptors.request.use(config => {
   if (token) {
     config.headers['Authorization'] = 'Bearer ' + token
   }
+  config.headers['App-Name'] = 'Board'
   return config
 }, err)
 

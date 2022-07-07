@@ -111,8 +111,8 @@ export default {
             title: '数据库配置',
             align: 'center',
             dataIndex: 'config',
-            customRender:(text) => {
-              if(text && text.length > 20) {
+            customRender: (text) => {
+              if (text && text.length > 20) {
                 return text.substring(0, 20) + '...'
               }
               return text

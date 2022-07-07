@@ -167,9 +167,7 @@ export default {
         smsSendBtn: false
       },
       accountLoginErrMsg: '',
-      tenantOpen: false,
       captchaOpen: false, // 是否开启验证码
-      tenantsList: [],
       loginParams: [], // 登录参数
       captchaType: captchaTypeValue
     }
@@ -216,9 +214,7 @@ export default {
 
       state.loginBtn = true
       const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha']
-      if (this.tenantOpen) {
-        validateFieldsKey.push('tenantCode')
-      }
+
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         this.loginParams = values
         if (!err) {
@@ -231,10 +227,6 @@ export default {
           const loginParams = { ...values }
           delete loginParams.account
           loginParams.account = values.account
-
-          if (this.tenantOpen) {
-            loginParams.tenantCode = values.tenantCode
-          }
 
           Login(loginParams)
             .then((res) => this.loginSuccess(res))

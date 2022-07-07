@@ -51,19 +51,6 @@ export function getLoginUser (parameter) {
 }
 
 /**
- * 获取租户开关
- *
- * @author Young-Pastor
- */
-export function getTenantOpen (parameter) {
-  return axios({
-    url: '/getTenantOpen',
-    method: 'get',
-    params: parameter
-  })
-}
-
-/**
  * 获取短信验证码
  *
  * @author Young-Pastor
