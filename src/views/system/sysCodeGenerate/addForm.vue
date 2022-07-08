@@ -17,7 +17,7 @@
               label="生成表"
               has-feedback
             >
-              <a-select style="width: 100%" placeholder="请选择数据库表" v-decorator="['tableName', {rules: [{ required: true, message: '请选择数据库表！' }]}]" >
+              <a-select show-search style="width: 100%" placeholder="请选择数据库表" v-decorator="['tableName', {rules: [{ required: true, message: '请选择数据库表！' }]}]" >
                 <a-select-option v-for="(item,index) in tableNameData" :key="index" :value="item.tableName" @click="tableNameSele(item)">{{ item.tableName }}</a-select-option>
               </a-select>
             </a-form-item>
@@ -184,7 +184,7 @@
         this.form.getFieldDecorator('authorName', { initialValue: 'Young-Pastor' })
         this.form.getFieldDecorator('packageName', { initialValue: 'com.zhisida' })
         this.form.getFieldDecorator('tablePrefix', { valuePropName: 'checked', initialValue: 'N' })
-        this.form.getFieldDecorator('generateType', { valuePropName: 'checked', initialValue: '0' })
+        this.form.getFieldDecorator('generateType', { valuePropName: 'checked', initialValue: '1' })
         this.tablePrefixValue = 'N'
       },
       /**
