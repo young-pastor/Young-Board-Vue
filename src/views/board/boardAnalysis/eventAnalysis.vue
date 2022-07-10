@@ -183,7 +183,6 @@
   </div>
 </template>
 <script>
-import {LineChartMultid, STable, XDown} from '@/components'
 import {boardDataSourceDelete, boardDataSourceExport} from '@/api/modular/board/boardDataSourceManage'
 import {boardEventList} from '@/api/modular/board/boardEventManage'
 import {boardPropertyList} from '@/api/modular/board/boardPropertyManage'
@@ -192,10 +191,6 @@ import {boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage
 
 export default {
   components: {
-    STable,
-    XDown,
-    LineChartMultid
-
   },
   data () {
     return {
