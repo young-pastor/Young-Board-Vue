@@ -10,7 +10,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-row>
-          <a-col>
+          <a-col :md="12" :sm="24">
             <a-form-item v-show="false"><a-input v-decorator="['id']" /></a-form-item>
             <a-form-item
               label="属性名称"
@@ -31,10 +31,10 @@
             >
 
               <a-tree-select
-                v-decorator="['eventGroupId', {rules: [{ required: true, message: '请选择属性分组！' }]}]"
+                v-decorator="['propertyGroupId', {rules: [{ required: true, message: '请选择属性分组！' }]}]"
                 style="width: 100%"
                 :dropdownStyle="{ maxHeight: '300px', overflow: 'auto' }"
-                :treeData="eventGroupTree"
+                :treeData="propertyGroupTree"
                 placeholder="请选择属性分组"
               >
                 <span slot="title" slot-scope="{ id }">{{ id }}
@@ -218,7 +218,7 @@ export default {
       this.loadDropDownData(record)
     },
     loadDropDownData(record) {
-      boardEventGroupTree().then(res => {
+      boardPropertyGroupTree().then(res => {
         this.treeLoading = false
         if (!res.success) {
           return
@@ -232,7 +232,6 @@ export default {
           'children': res.data
         }]
       })
-
       boardDataSourceList().then(res => {
         if (!res.success) {
           return

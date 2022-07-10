@@ -1,7 +1,7 @@
 <template>
   <div class="rank">
     <h4 class="title">{{ title }}</h4>
-    <ul class="list">
+    <ul class="list" :style="{height:height?`${height}px`:'auto',overflow:'auto'}">
       <li :key="index" v-for="(item, index) in list">
         <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
         <span>{{ item.name }}</span>
@@ -12,20 +12,24 @@
 </template>
 
 <script>
-export default {
-  name: 'RankList',
-  // ['title', 'list']
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    list: {
-      type: Array,
-      default: null
+  export default {
+    name: "RankList",
+    // ['title', 'list']
+    props: {
+      title: {
+        type: String,
+        default: ''
+      },
+      list: {
+        type: Array,
+        default: null
+      },
+      height: {
+        type: Number,
+        default: null
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>
