@@ -1,73 +1,55 @@
 <template>
-  <div :style="{'width':width==null?'auto':width+'px'}">
-    <v-chart :forceFit="width==null" :height="height" :data="data" padding="0">
-      <v-tooltip/>
-      <v-bar position="x*y"/>
-    </v-chart>
+  <div class="antv-chart-mini">
+    <div class="chart-wrapper" :style="{ height: 46 }">
+      <v-chart :force-fit="true" :height="height" :data="data" :padding="[36, 5, 18, 5]">
+        <v-tooltip />
+        <v-bar position="x*y" />
+      </v-chart>
+    </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+const data = []
+const beginDay = new Date().getTime()
 
-  const sourceData = []
-  const beginDay = new Date().getTime()
+for (let i = 0; i < 10; i++) {
+  data.push({
+    x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+    y: Math.round(Math.random() * 10)
+  })
+}
 
-  for (let i = 0; i < 10; i++) {
-    sourceData.push({
-      x: '',
-      y: Math.round(Math.random() * 10)
-    })
-  }
+const tooltip = [
+  'x*y',
+  (x, y) => ({
+    name: x,
+    value: y
+  })
+]
 
-  const tooltip = [
-    'x*y',
-    (x, y) => ({
-      name: x,
-      value: y
-    })
-  ]
+const scale = [{
+  dataKey: 'x',
+  min: 2
+}, {
+  dataKey: 'y',
+  title: '时间',
+  min: 1,
+  max: 30
+}]
 
-  const scale = [{
-    dataKey: 'x',
-    min: 2
-  }, {
-    dataKey: 'y',
-    title: '时间',
-    min: 1,
-    max: 30
-  }]
-
-  export default {
-    name: 'MiniBar',
-    props: {
-      dataSource: {
-        type: Array,
-        default: () => []
-      },
-      width: {
-        type: Number,
-        default: null
-      },
-      height: {
-        type: Number,
-        default: 200
-      }
-    },
-    created() {
-      if (this.dataSource.length === 0) {
-        this.data = sourceData
-      } else {
-        this.data = this.dataSource
-      }
-    },
-    data() {
-      return {
-        tooltip,
-        data: [],
-        scale
-      }
+export default {
+  name: 'MiniBar',
+  data () {
+    return {
+      data,
+      tooltip,
+      scale,
+      height: 100
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

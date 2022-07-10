@@ -7,49 +7,47 @@
 </template>
 
 <script>
-  export default {
-    name: "Trend",
-    props: {
-      // 同title
-      term: {
-        type: String,
-        default: '',
-        required: true
-      },
-      // 百分比
-      percentage: {
-        type: Number,
-        default: null
-      },
-      type: {
-        type: Boolean,
-        default: null
-      },
-      target: {
-        type: Number,
-        default: 0
-      },
-      value: {
-        type: Number,
-        default: 0
-      },
-      fixed: {
-        type: Number,
-        default: 2
-      }
+export default {
+  name: 'Trend',
+  props: {
+    term: {
+      type: String,
+      default: '',
+      required: true
     },
-    data () {
-      return {
-        trend: this.type && 'up' || 'down',
-        rate: this.percentage
-      }
+    percentage: {
+      type: Number,
+      default: null
     },
-    created () {
-      let type = this.type === null ? this.value >= this.target : this.type
-      this.trend = type ? 'up' : 'down';
-      this.rate = (this.percentage === null ? Math.abs(this.value - this.target) * 100 / this.target : this.percentage).toFixed(this.fixed)
+    type: {
+      type: Boolean,
+      default: null
+    },
+    target: {
+      type: Number,
+      default: 0
+    },
+    value: {
+      type: Number,
+      default: 0
+    },
+    fixed: {
+      type: Number,
+      default: 2
     }
+  },
+  data () {
+    return {
+      trend: this.type && 'up' || 'down',
+      rate: this.percentage
+    }
+  },
+  created () {
+    const type = this.type === null ? this.value >= this.target : this.type
+    this.trend = type ? 'up' : 'down'
+    this.rate = (this.percentage === null ? Math.abs(this.value - this.target) * 100 / this.target : this.percentage).toFixed(this.fixed)
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -7,13 +7,13 @@
       :data="data"
       :scale="scale"
       :padding="0">
-      <v-tooltip/>
+      <v-tooltip />
       <v-interval
         :shape="['liquid-fill-gauge']"
         position="transfer*value"
         color=""
         :v-style="{
-          lineWidth: 8,
+          lineWidth: 10,
           opacity: 0.75
         }"
         :tooltip="[
@@ -47,32 +47,19 @@
 </template>
 
 <script>
-
-  const sourceDataConst = [
-    { transfer: '一月', value: 813 },
-    { transfer: '二月', value: 233 },
-    { transfer: '三月', value: 561 }
-  ]
-
-  export default {
-    name: 'Liquid',
-    props: {
-      height: {
-        type: Number,
-        default: 0
-      },
-      width: {
-        type: Number,
-        default: 0
-      }
+export default {
+  name: 'Liquid',
+  props: {
+    height: {
+      type: Number,
+      default: 0
     },
-    data() {
-      return {
-        data: sourceDataConst,
-        scale: []
-      }
+    width: {
+      type: Number,
+      default: 0
     }
   }
+}
 </script>
 
 <style scoped>
