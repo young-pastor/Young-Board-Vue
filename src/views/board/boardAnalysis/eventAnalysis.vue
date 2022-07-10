@@ -176,7 +176,6 @@
               </span>
           </div>
           <div>
-            <line-chart-multid :dataSource="analysisData.dataSource" :fields="analysisData.fields"/>
           </div>
         </a-card>
       </a-col>
