@@ -246,7 +246,6 @@ export default {
      */
     verifySuccess(params) {
       this.loginParams.code = params.captchaVerification
-      console.log(JSON.stringify(this.loginParams))
       this.Login(this.loginParams).then((res) => this.loginSuccess(res))
         .catch(err => this.requestFailed(err))
         .finally(() => {

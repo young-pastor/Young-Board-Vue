@@ -176,8 +176,9 @@
 
     <a-row>
       <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :bordered="false" title=""
-                :style="{ height: '100%' }">
+        <a-card
+          class="antd-pro-pages-dashboard-analysis-salesCard" :bordered="false" title=""
+          :style="{ height: '100%' }">
           <div slot="extra" style="height: inherit;">
             <!-- style="bottom: 12px;display: inline-block;" -->
             <span class="dashboard-analysis-iconGroup">
@@ -195,6 +196,7 @@
               </span>
           </div>
           <div>
+            <div id="analysisChart" style="height: 300px;width: 100%"></div>
           </div>
         </a-card>
       </a-col>
@@ -206,7 +208,6 @@ import {boardDataSourceDelete, boardDataSourceExport} from '@/api/modular/board/
 import {boardEventList} from '@/api/modular/board/boardEventManage'
 import {boardPropertyList} from '@/api/modular/board/boardPropertyManage'
 import {boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage'
-
 
 export default {
   components: {},
@@ -231,8 +232,9 @@ export default {
       eventList: [],
       propertyList: [],
       analysisData: {
-        dataSource: [],
-        fields: []
+        legend: [],
+        xAxis: [],
+        series:[],
       },
     }
   },
@@ -240,6 +242,47 @@ export default {
     this.loadDropDownData()
   },
   methods: {
+    drawChart() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("analysisChart"));
+      // 指定图表的配置项和数据
+      let option = {
+        title: {
+          text: 'Stacked Line'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.analysisData.legend
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.analysisData.xAxis
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: this.analysisData.series
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+      window.addEventListener('resize', function () {
+        myChart.resize()
+      })
+    },
     loadDropDownData() {
       boardPropertyList().then(res => {
         this.propertyList = res.data
@@ -284,10 +327,27 @@ export default {
       return analysisProperty
     },
     queryAnalysisData() {
-      boardAnalysisAnalysisById(this.analysisParam).then(res => {
-        this.analysisData.dataSource = res.data.resultData.rows;
-        this.analysisData.fields = res.data.resultData.fields;
-      })
+      var that = this;
+      boardAnalysisAnalysisById(that.analysisParam).then(res => {
+        that.analysisData.xAxis =[]
+        that.analysisData.legend =[]
+        that.analysisData.series =[]
+        that.analysisData.xAxis = res.data.resultData['1'].displayRow; ;
+        var index = 0;
+        res.data.resultData['1'].groupRow.forEach(function (d){
+          var dStr = JSON.stringify(d)
+          that.analysisData.legend.push(dStr);
+          that.analysisData.series.push({
+            name: dStr,
+            type: 'line',
+            stack: 'Total',
+            data: res.data.resultData['1'].valueCol[index]
+          })
+          index++;
+        })
+        console.log(that.analysisData)
+        that.drawChart();
+    })
     },
     typeFilter(t) {
       const values = this.dataSourceTypeDictTypeDropDown.filter(item => item.code === t)

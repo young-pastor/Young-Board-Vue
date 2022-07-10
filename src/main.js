@@ -13,7 +13,9 @@ import './components/global.less'
 import { Dialog } from '@/components'
 import { hasBtnPermission } from './utils/permissions'
 import { sysApplication } from './utils/applocation'
+import * as echarts from 'echarts'
 
+Vue.prototype.$echarts = echarts
 Vue.use(VueAxios)
 Vue.use(Dialog)
 Vue.prototype.hasPerm = hasBtnPermission

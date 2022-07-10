@@ -124,7 +124,8 @@
           <span slot="action" slot-scope="text, record">
             <a v-if="hasPerm('boardEvent:edit')" @click="$refs.editForm.edit(record)">编辑</a>
             <a-divider type="vertical" v-if="hasPerm('boardEvent:edit') & hasPerm('boardEvent:delete')"/>
-            <a-popconfirm v-if="hasPerm('boardEvent:delete')" placement="topRight" title="确认删除？"
+            <a-popconfirm
+              v-if="hasPerm('boardEvent:delete')" placement="topRight" title="确认删除？"
                           @confirm="() => singleDelete(record)">
               <a>删除</a>
             </a-popconfirm>
