@@ -3,12 +3,12 @@
     <a-card :bordered="false" :bodyStyle="tstyle">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
-          <div v-for="(analysisEvent,index) in analysisParam.eventList" :key="index">
+          <div v-for="(analysisEvent,aeIndex) in analysisParam.eventList" :key="aeIndex">
             <a-row :gutter="24" style="margin-top: 10px">
               <a-col :md="1" :sm="12">
                 <a-form-item label="">
                   <a-button type="primary" shape="circle" size="small" disabled>
-                    {{ String.fromCharCode(index + 65) }}
+                    {{ String.fromCharCode(aeIndex + 65) }}
                   </a-button>
                 </a-form-item>
               </a-col>
@@ -34,10 +34,10 @@
             </a-row>
             <a-row :gutter="24">
               <a-col :offset="1" :md="4" :sm="20">
-                <a-form-item label="">
-                  <a-select v-model="analysisEvent.eventId" allow-clear placeholder="请选择事件">
-                    <a-select-option v-for="(item,index) in eventList" :key="index" :value="item.id">{{
-                        item.displayName
+                <a-form-item>
+                  <a-select v-model="analysisEvent.eventId" allow-clear placeholder="请选择事件" >
+                    <a-select-option v-for="(event,eIndex) in eventAllList" :key="eIndex" :value="event.id">{{
+                        event.displayName
                       }}
                     </a-select-option>
                   </a-select>
@@ -50,8 +50,8 @@
               </a-col>
               <a-col :md="3" :sm="24">
                 <a-form-item label="">
-                  <a-select v-model="analysisEvent.property.id" allow-clear placeholder="请选择">
-                    <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
+                  <a-select v-model="analysisEvent.property.propertyId" allow-clear placeholder="请选择">
+                    <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
                       {{ item.displayName }}
                     </a-select-option>
                   </a-select>
@@ -60,8 +60,8 @@
               <a-col :md="2" :sm="24">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.measure" allow-clear placeholder="请选择">
-                    <a-select-option v-for="(item,index) in eventList" :key="index" :value="item.id">{{
-                        item.displayName
+                    <a-select-option v-for="(item,mIndex) in measureTypeDictTypeDropDown" :key="mIndex" :value="item.code">{{
+                        item.name
                       }}
                     </a-select-option>
                   </a-select>
@@ -74,17 +74,17 @@
           </div>
           <a-row :gutter="24">
             <a-col :md="8" :sm="8">
-              <a-button type="link" icon="plus">指标</a-button>
+              <a-button type="link" icon="plus" @click="() => analysisParam.eventList.push({eventId:'',property: {propertyId: '',measure: ''}})">指标</a-button>
             </a-col>
           </a-row>
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c;font-size: small">筛选条件</span>
           </a-divider>
-          <a-row :gutter="24">
+          <a-row :gutter="24" v-for="(aFilter,afIndex) in analysisParam.filterList" :key="afIndex">
             <a-col :md="4" :sm="12">
               <a-form-item>
-                <a-select v-model="analysisParam.filterList.id" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
+                <a-select v-model="aFilter.id" allow-clear placeholder="请选择" default-value="0">
+                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -92,9 +92,9 @@
             </a-col>
             <a-col :md="2" :sm="24">
               <a-form-item label="">
-                <a-select v-model="analysisParam.dimensionList.id" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
-                    {{ item.displayName }}
+                <a-select v-model="aFilter.measure" allow-clear placeholder="请选择">
+                  <a-select-option v-for="(item,ftIndex) in filterTypeDictTypeDropDown" :key="ftIndex" :value="item.code">
+                    {{ item.name }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
@@ -107,17 +107,17 @@
           </a-row>
           <a-row :gutter="24">
             <a-col :md="8" :sm="8">
-              <a-button type="link" icon="plus">添加</a-button>
+              <a-button type="link" icon="plus" @click="() => analysisParam.filterList.push({propertyId:'',measure:''})">添加</a-button>
             </a-col>
           </a-row>
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c ;font-size: small">按*分组</span>
           </a-divider>
-          <a-row :gutter="24">
+          <a-row :gutter="24" v-for="(aDimension,adIndex) in analysisParam.dimensionList" :key="adIndex">
             <a-col :md="4" :sm="12">
               <a-form-item>
-                <a-select v-model="analysisParam.dimensionList.id" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
+                <a-select v-model="aDimension.propertyId" allow-clear placeholder="请选择" default-value="0">
+                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -128,20 +128,26 @@
                 <a-button type="link" shape="round" icon="setting"></a-button>
               </a-form-item>
             </a-col>
-            <a-col :md="1" :sm="12">
+            <a-col :md="2" :sm="12" v-if="analysisParam.dimensionList.length>1">
               <a-form-item>
-                <a-button type="link" icon="plus">添加</a-button>
+                <a-button type="link" icon="delete" @click="() => analysisParam.dimensionList.splice(adIndex,1)">删除</a-button>
+              </a-form-item>
+            </a-col>
+            <a-col :md="1" :sm="12" v-if="adIndex==analysisParam.dimensionList.length-1">
+              <a-form-item>
+                <a-button type="link" icon="plus" @click="() => analysisParam.dimensionList.push({propertyId:null})" >添加</a-button>
               </a-form-item>
             </a-col>
           </a-row>
+
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c;font-size: small">按*查看</span>
           </a-divider>
-          <a-row :gutter="24">
+          <a-row :gutter="24" >
             <a-col :md="4" :sm="24">
               <a-form-item label="">
-                <a-select v-model="analysisParam.dimensionList.id" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
+                <a-select v-model="analysisParam.displayDimension.propertyId" allow-clear placeholder="请选择">
+                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -149,9 +155,9 @@
             </a-col>
             <a-col :md="2" :sm="24">
               <a-form-item label="">
-                <a-select v-model="analysisParam.dimensionList.id" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,index) in propertyList" :key="index" :value="item.id">
-                    {{ item.displayName }}
+                <a-select v-model="analysisParam.displayDimension.measure" allow-clear placeholder="请选择">
+                  <a-select-option v-for="(item,index) in filterTypeDictTypeDropDown" :key="index" :value="item.code">
+                    {{ item.name }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
@@ -162,6 +168,7 @@
               </a-form-item>
             </a-col>
           </a-row>
+
           <a-row :gutter="24">
             <a-col :md="8" :sm="24">
               <span class="table-page-search-submitButtons">
@@ -177,7 +184,8 @@
     <a-row>
       <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
         <a-card
-          class="antd-pro-pages-dashboard-analysis-salesCard" :bordered="false" title=""
+          class="antd-pro-pages-dashboard-analysis-salesCard"
+          :bordered="false"
           :style="{ height: '100%' }">
           <div slot="extra" style="height: inherit;">
             <!-- style="bottom: 12px;display: inline-block;" -->
@@ -223,14 +231,51 @@ export default {
         chartConfig: '',
         subLogic: '',
         sort: '',
-        eventList: [],
-        propertyList: [],
-        dimensionList: [],
-        filterList: [],
+        eventList: [{
+          id:'',
+          analysisId:'',
+          eventId:'',
+          sort:'',
+          subLogic:'',
+          displayName:'',
+          property: {
+            propertyId:'',
+            measure:'',
+          },
+        }],
+        propertyList: [{
+          propertyId:'',
+          property:{
+            id:'',
+            displayName:'',
+            propertyGroupId:'',
+            dataSourceId:'',
+            tableId:'',
+            tableColumnId:'',
+            measure:'',
+            value:'',
+            valueType:'',
+            unit:'',
+            unitType:'',
+            isDefault:'',
+            remark:''
+          }
+        }],
+        dimensionList: [{
+          propertyId:'',
+        }],
+        filterList: [{
+          propertyId:''
+        }],
+        displayDimension:{
+          propertyId:'',
+        },
       },
       tstyle: {'padding-bottom': '0px', 'margin-bottom': '10px'},
-      eventList: [],
-      propertyList: [],
+      eventAllList: [],
+      propertyAllList: [],
+      filterTypeDictTypeDropDown: [],
+      measureTypeDictTypeDropDown: [],
       analysisData: {
         legend: [],
         xAxis: [],
@@ -244,7 +289,7 @@ export default {
   methods: {
     drawChart() {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("analysisChart"));
+      const myChart = this.$echarts.init(document.getElementById("analysisChart"));
       // 指定图表的配置项和数据
       let option = {
         title: {
@@ -284,26 +329,36 @@ export default {
       })
     },
     loadDropDownData() {
+      this.filterTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_filter_type')
+      this.measureTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_measure_type')
+
       boardPropertyList().then(res => {
-        this.propertyList = res.data
-        this.propertyList.unshift({id: "COUNT", displayName: "总次数"})
+        this.propertyAllList = res.data
+        this.propertyAllList.unshift({id: "COUNT", displayName: "总次数"})
       })
       boardEventList().then(res => {
-        this.eventList = res.data
-        this.analysisParam.eventList[0] = {
-          eventId: this.eventList[0].id
-        }
+        this.eventAllList = res.data
+        // this.analysisParam.eventList[0] = {
+        //   eventId: this.eventAllList[0].id,
+        //   property:{
+        //     propertyId : 'COUNT'
+        //   }
+        // }
       })
     },
-
+    showAnalysisVo(){
+      console.log(this.analysisParam)
+    },
     getAnalysisEventDisplayName(e) {
       var analysisName = e.displayName;
       if (!analysisName) {
-        var event = this.eventList.filter(i => i.id == e.eventId)[0]
+        var event = this.eventAllList.filter(i => i.id == e.eventId)[0]
+        if(!event){
+          return analysisName;
+        }
         analysisName = event.displayName + " 的 "
         var analysisProperty = this.getAnalysisEventProperty(e.eventId);
         if (analysisProperty) {
-          e.property = analysisProperty
           var propertyName = analysisProperty.displayName;
           if (!propertyName && analysisProperty.property) {
             propertyName = analysisProperty.property.displayName
@@ -322,7 +377,7 @@ export default {
         analysisProperty = {}
         analysisProperty.property = {id: "COUNT", displayName: "总次数", measure: "COUNT"}
       } else {
-        analysisProperty.property = this.propertyList.filter(i => i.id === e.propertyId)[0]
+        analysisProperty.property = this.propertyAllList.filter(i => i.id === e.propertyId)[0]
       }
       return analysisProperty
     },
@@ -345,7 +400,6 @@ export default {
           })
           index++;
         })
-        console.log(that.analysisData)
         that.drawChart();
     })
     },
