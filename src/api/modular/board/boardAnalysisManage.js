@@ -91,6 +91,20 @@ export function boardAnalysisExport (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:51:00
  */
+export function boardAnalysisAnalysis (parameter) {
+  return axios({
+    url: '/boardAnalysis/analysis',
+    method: 'post',
+    data: parameter
+  })
+}
+
+/**
+ * 导出实时分析
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:51:00
+ */
 export function boardAnalysisAnalysisById (parameter) {
   return axios({
     url: '/boardAnalysis/analysisById',

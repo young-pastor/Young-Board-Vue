@@ -48,14 +48,14 @@
               <a-col :md="3" :sm="24">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.propertyId" allow-clear placeholder="请选择">
-                    <a-select-option v-for="(item,i3) in propertyAllList"
+                    <a-select-option v-for="(item,i3) in eventPropertyAllList"
                                      :value="item.id">
                       {{ item.displayName }}
                     </a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :md="2" :sm="24" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId)">
+              <a-col :md="2" :sm="24" v-if="checkEventPropertyMeasureShow(analysisEvent.property.propertyId)">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.measure" allow-clear placeholder="请选择">
                     <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown"  :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
@@ -82,7 +82,7 @@
             <a-col :md="4" :sm="12">
               <a-form-item>
                 <a-select v-model="aFilter.propertyId" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,i6) in propertyAllList" :value="item.id">
+                  <a-select-option v-for="(item,i6) in filterPropertyAllList" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -97,12 +97,19 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.measure)">
-              <a-form-item label="" v-if="aFilter.measure == 'RANGE'">
-                <a-range-picker :style="{width: '350px'}" showTime/>
-              </a-form-item>
+            <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.propertyId,aFilter.measure,'INPUT')">
               <a-form-item label="" >
-                <a-input />
+                <a-input v-model="aFilter.value" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.propertyId,aFilter.measure,'RANGE')">
+              <a-form-item label="" >
+                <a-range-picker :style="{width: '350px'}" showTime v-model="aFilter.value"/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="2" :sm="12" >
+              <a-form-item>
+                <a-button type="link" icon="delete" @click="() => analysisParam.filterList.splice(i7,1)">删除</a-button>
               </a-form-item>
             </a-col>
           </a-row>
@@ -118,7 +125,7 @@
             <a-col :md="4" :sm="12">
               <a-form-item>
                 <a-select v-model="aDimension.propertyId" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,i9) in propertyAllList"  :value="item.id">
+                  <a-select-option v-for="(item,i9) in groupPropertyAllList"  :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -149,7 +156,7 @@
             <a-col :md="4" :sm="24">
               <a-form-item label="">
                 <a-select v-model="analysisParam.displayDimension.propertyId" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,i10) in propertyAllList"   :value="item.id">
+                  <a-select-option v-for="(item,i10) in groupPropertyAllList"   :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -213,7 +220,7 @@
               </span>
           </div>
           <div>
-            <div id="analysisChart" style="height: 300px;width: 100%"></div>
+            <div id="analysis_chart" style="height: 300px;width: 100%"></div>
           </div>
         </a-card>
       </a-col>
@@ -223,7 +230,7 @@
 <script>
 import {boardEventAnalysisList} from '@/api/modular/board/boardEventManage'
 import {boardPropertyAnalysisList} from '@/api/modular/board/boardPropertyManage'
-import {boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage'
+import {boardAnalysisAnalysis, boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage'
 
 export default {
   components: {},
@@ -233,25 +240,29 @@ export default {
       advanced: false,
       // 查询参数
       analysisParam: {
+        id: 1,
         type: 'EVENT',
         subLogic: 'AND',
         eventList: [{eventId:null,property: {propertyId:null}}],
         propertyList: [],
-        dimensionList: [{propertyId:'0'}],
+        dimensionList: [{propertyId: 0 }],
         filterList: [],
         displayDimension:{
-          property:{}
+          propertyId:null,
+          type:'ROW'
         },
       },
       tstyle: {'padding-bottom': '0px', 'margin-bottom': '10px'},
-      eventAllList: [{id:''}],
-      propertyAllList: [{id:''}],
+      eventAllList: [],
+      eventPropertyAllList: [],
+      filterPropertyAllList: [],
+      groupPropertyAllList: [],
       filterTypeDictTypeDropDown: [],
       measureTypeDictTypeDropDown: [],
       analysisData: {
         legend: [],
-        xAxis: [],
-        series:[],
+        xAxis:  [],
+        series: [],
       },
       filterMeasure:{
         'NUMBER' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN',],
@@ -260,15 +271,7 @@ export default {
         'DATE_TIME' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR',]
       },
       filterParam: {
-        'INPUT':{
-          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
-        },
-        'SELECT':{
-          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
-        },
-        'RANGE':{
-          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
-        }
+        'INPUT': ['EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN']
       },
       indicatorMeasure:{
         'NUMBER' : ['COUNT','DISTINCT','SUM','AVG','MAX','MIN'],
@@ -276,7 +279,7 @@ export default {
         'BOOLEAN' : ['COUNT','DISTINCT'],
         'DATE_TIME' : ['COUNT','DISTINCT','MAX','MIN']
       },
-
+      analysisChartInstance:null
     }
   },
   created() {
@@ -284,13 +287,16 @@ export default {
   },
   methods: {
     drawChart() {
+      if(!this.analysisChartInstance){
+        this.analysisChartInstance = this.$echarts.init(document.getElementById("analysis_chart"));
+        window.addEventListener('resize', function () {
+          this.analysisChartInstance.resize()
+        })
+      }
       // 基于准备好的dom，初始化echarts实例
-      const myChart = this.$echarts.init(document.getElementById("analysisChart"));
       // 指定图表的配置项和数据
       let option = {
-        title: {
-          text: 'Stacked Line'
-        },
+        title: { text: ''},
         tooltip: {
           trigger: 'axis'
         },
@@ -319,19 +325,21 @@ export default {
         series: this.analysisData.series
       };
       // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
-      window.addEventListener('resize', function () {
-        myChart.resize()
-      })
+      this.analysisChartInstance.setOption(option);
     },
     loadDropDownData() {
       this.filterTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_filter_type')
       this.measureTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_measure_type')
 
       boardPropertyAnalysisList().then(res => {
-        this.propertyAllList = res.data
-        this.propertyAllList.unshift({id: "0", displayName: "总次数"})
-        this.analysisParam.eventList[0].property.propertyId = this.propertyAllList[0].id
+        this.eventPropertyAllList = this.eventPropertyAllList.concat(res.data)
+        this.eventPropertyAllList.unshift({id: "0", displayName: "总次数"})
+        this.analysisParam.eventList[0].property.propertyId = this.eventPropertyAllList[0].id
+        this.filterPropertyAllList = res.data
+        this.groupPropertyAllList = this.groupPropertyAllList.concat(res.data)
+        this.groupPropertyAllList.unshift({id: "0", displayName: "总体"})
+        this.analysisParam.dimensionList[0].propertyId = this.groupPropertyAllList[0].id
+        this.analysisParam.displayDimension.propertyId = this.groupPropertyAllList[0].id
       })
       boardEventAnalysisList().then(res => {
         this.eventAllList = res.data
@@ -346,7 +354,7 @@ export default {
           return analysisName;
         }
         analysisName = event.displayName + " 的 "
-        var analysisProperty = this.getAnalysisEventProperty(e.property.propertyId);
+        var analysisProperty = this.eventPropertyAllList.filter(i => i.id === e.property.propertyId)[0]
         if (analysisProperty) {
           analysisName += analysisProperty.displayName
           if(analysisProperty.column){
@@ -361,35 +369,38 @@ export default {
       }
       return analysisName
     },
-    getAnalysisEventProperty(e) {
-      let property = this.propertyAllList.filter(i => i.id === e)[0]
-
-      return property
-    },
     queryAnalysisData() {
       var that = this;
-      boardAnalysisAnalysisById(that.analysisParam).then(res => {
-        that.analysisData.xAxis =[]
-        that.analysisData.legend =[]
-        that.analysisData.series =[]
-        that.analysisData.xAxis = res.data.resultData['1'].displayRow; ;
+      var analysis_param = {
+          type: that.analysisParam.type,
+          subLogic: that.analysisParam.subLogic,
+          eventList: [].concat(that.analysisParam.eventList),
+          propertyList: [].concat(that.analysisParam.propertyList),
+          dimensionList: [].concat(that.analysisParam.dimensionList).concat(that.analysisParam.displayDimension),
+          filterList: [].concat(that.analysisParam.filterList),
+      }
+      boardAnalysisAnalysis(analysis_param).then(res => {
+        that.analysisData.xAxis = []
+        that.analysisData.legend = []
+        that.analysisData.series = []
+        that.analysisData.xAxis = res.data.resultData.displayRow;
         var index = 0;
-        res.data.resultData['1'].groupRow.forEach(function (d){
+        res.data.resultData.groupRow.forEach(function (d){
           var dStr = JSON.stringify(d)
           that.analysisData.legend.push(dStr);
           that.analysisData.series.push({
             name: dStr,
             type: 'line',
             stack: 'Total',
-            data: res.data.resultData['1'].valueCol[index]
+            data: res.data.resultData.valueCol[index]
           })
           index++;
         })
-        that.drawChart();
+        this.drawChart();
       })
     },
     checkGroupDimensionUnitShow(pId){
-      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
       if(!property || !property.column){
         return false;
       }
@@ -398,11 +409,28 @@ export default {
       }
       return false;
     },
-    checkFilterParamShow(e){
+    checkFilterParamShow(pId,measure,type){
+      let property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
+      }
+      if(measure && this.filterParam[type]){
+        return this.filterParam[type].includes(measure)
+      }
       return false;
     },
+    checkEventPropertyMeasureShow(pId,measureCode){
+      let property = this.eventPropertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
+      }
+      if(measureCode){
+        return this.indicatorMeasure[property.column.columnType].includes(measureCode)
+      }
+      return true;
+    },
     checkFilterMeasureShow(pId,measureCode){
-      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      let property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
       if(!property || !property.column){
         return false;
       }
@@ -412,7 +440,7 @@ export default {
       return true;
     },
     checkDisplayDimensionMeasureShow(pId,measureCode){
-      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
       if(!property || !property.column){
         return false;
       }
