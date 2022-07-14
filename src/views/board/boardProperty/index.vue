@@ -113,7 +113,7 @@
       >
         <template class="table-operator" slot="operator" v-if="hasPerm('boardProperty:add')" >
           <a-button type="primary" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.addForm.add()">新增属性</a-button>
-          <a-button type="refresh" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.autoCreateForm.add()">新增属性</a-button>
+          <a-button v-if="hasPerm('boardProperty:add')" icon="refresh" @click="$refs.autoCreateForm.add()">自动同步属性</a-button>
           <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardProperty:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
             v-if="hasPerm('boardProperty:export')"

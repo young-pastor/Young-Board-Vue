@@ -10,7 +10,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-row :gutter="24">
-          <a-col :md="12" :sm="24">
+          <a-col :md="24" :sm="24">
             <a-form-item
               label="属性分组"
               :labelCol="labelCol"
@@ -30,7 +30,7 @@
             </a-form-item>
           </a-col>
 
-          <a-col :md="12" :sm="24">
+          <a-col :md="24" :sm="24">
             <a-form-item
               label="数据库"
               :labelCol="labelCol"
@@ -43,7 +43,7 @@
             </a-form-item>
           </a-col>
 
-          <a-col :md="12" :sm="24">
+          <a-col :md="24" :sm="24">
             <a-form-item
               label="数据表"
               :labelCol="labelCol"
