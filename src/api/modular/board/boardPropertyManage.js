@@ -27,6 +27,19 @@ export function boardPropertyAnalysisList (parameter) {
     params: parameter
   })
 }
+/**
+ * 元事件配置列表
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:17
+ */
+export function boardPropertyAutoCreate (parameter) {
+  return axios({
+    url: '/boardProperty/autoCreate',
+    method: 'get',
+    params: parameter
+  })
+}
 
 /**
  * 属性配置列表

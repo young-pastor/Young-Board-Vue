@@ -113,6 +113,7 @@
       >
         <template class="table-operator" slot="operator" v-if="hasPerm('boardProperty:add')" >
           <a-button type="primary" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.addForm.add()">新增属性</a-button>
+          <a-button type="refresh" v-if="hasPerm('boardProperty:add')" icon="plus" @click="$refs.autoCreateForm.add()">新增属性</a-button>
           <a-button type="danger" :disabled="selectedRowKeys.length < 1" v-if="hasPerm('boardProperty:delete')" @click="batchDelete"><a-icon type="delete"/>批量删除</a-button>
           <x-down
             v-if="hasPerm('boardProperty:export')"
@@ -144,6 +145,7 @@
       <edit-form ref="editForm" @ok="handleOk" />
       <add-group-form ref="addGroupForm" @ok="loadPropertyGroupTree" />
       <edit-group-form ref="editGroupForm" @ok="loadPropertyGroupTree" />
+      <auto-create-form ref="autoCreateForm" @ok="loadPropertyGroupTree" />
     </a-card>
 
     </a-col>
@@ -163,6 +165,7 @@
   import editForm from './editForm.vue'
   import addGroupForm from './addGroupForm.vue'
   import editGroupForm from './editGroupForm.vue'
+  import autoCreateForm from './autoCreateForm.vue'
   import { boardDataSourceList } from '@/api/modular/board/boardDataSourceManage'
   import { boardTableList } from '@/api/modular/board/boardTableManage'
   import { boardTableColumnList } from '@/api/modular/board/boardTableColumnManage'
@@ -173,6 +176,7 @@
       editForm,
       addGroupForm,
       editGroupForm,
+      autoCreateForm,
       XDown
     },
     data () {

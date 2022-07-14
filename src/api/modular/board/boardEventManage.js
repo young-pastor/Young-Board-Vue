@@ -34,6 +34,20 @@ export function boardEventList (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:52:17
  */
+export function boardEventAutoCreate (parameter) {
+  return axios({
+    url: '/boardEvent/autoCreate',
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 元事件配置列表
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:17
+ */
 export function boardEventAnalysisList (parameter) {
   return axios({
     url: '/boardEvent/analysisList',

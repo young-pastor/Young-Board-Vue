@@ -94,6 +94,8 @@
           <template class="table-operator" slot="operator" v-if="hasPerm('boardEvent:add')">
             <a-button type="primary" v-if="hasPerm('boardEvent:add')" icon="plus" @click="$refs.addForm.add()">新增元事件
             </a-button>
+            <a-button type="primary" v-if="hasPerm('boardEvent:add')" icon="plus" @click="$refs.autoCreateForm.add()">新增元事件
+            </a-button>
             <a-button
               type="danger"
               :disabled="selectedRowKeys.length < 1"
@@ -135,6 +137,7 @@
         <edit-form ref="editForm" @ok="handleOk"/>
         <add-group-form ref="addGroupForm" @ok="loadEventGroupTree" />
         <edit-group-form ref="editGroupForm" @ok="loadEventGroupTree" />
+        <auto-create-form ref="autoCreateForm" @ok="loadPropertyGroupTree" />
       </a-card>
     </a-col>
   </a-row>
@@ -153,6 +156,7 @@ import addForm from './addForm.vue'
 import editForm from './editForm.vue'
 import addGroupForm from './addGroupForm.vue'
 import editGroupForm from './editGroupForm.vue'
+import autoCreateForm from './autoCreateForm.vue'
 import {boardDataSourceList} from "@/api/modular/board/boardDataSourceManage";
 import {boardTableList} from "@/api/modular/board/boardTableManage";
 import {boardTableColumnList} from "@/api/modular/board/boardTableColumnManage";
@@ -164,6 +168,7 @@ export default {
     editForm,
     addGroupForm,
     editGroupForm,
+    autoCreateForm,
     XDown
   },
   data() {
