@@ -29,6 +29,20 @@ export function boardEventList (parameter) {
 }
 
 /**
+ * 元事件配置列表
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:52:17
+ */
+export function boardEventAnalysisList (parameter) {
+  return axios({
+    url: '/boardEvent/analysisList',
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
  * 添加元事件配置
  *
  * @author Young-Pastor

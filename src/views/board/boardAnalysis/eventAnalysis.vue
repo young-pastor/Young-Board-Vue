@@ -3,12 +3,12 @@
     <a-card :bordered="false" :bodyStyle="tstyle">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
-          <div v-for="(analysisEvent,aeIndex) in analysisParam.eventList" :key="aeIndex">
+          <div v-for="(analysisEvent,i1) in analysisParam.eventList">
             <a-row :gutter="24" style="margin-top: 10px">
               <a-col :md="1" :sm="12">
                 <a-form-item label="">
                   <a-button type="primary" shape="circle" size="small" disabled>
-                    {{ String.fromCharCode(aeIndex + 65) }}
+                    {{ String.fromCharCode(i1 + 65) }}
                   </a-button>
                 </a-form-item>
               </a-col>
@@ -26,20 +26,17 @@
                 </a-form-item>
               </a-col>
               <a-col :md="2" :sm="24">
-                <a-button type="link" shape="round" icon="copy">复制</a-button>
+                <a-button type="link" shape="round" icon="copy" @click="() => analysisParam.eventList.push(analysisEvent)">复制</a-button>
               </a-col>
-              <a-col :md="1" :sm="24">
-                <a-button type="link" shape="round" icon="delete">删除</a-button>
+              <a-col :md="1" :sm="24" v-if="analysisParam.eventList.length>1">
+                <a-button type="link" shape="round" icon="delete" @click="() => analysisParam.eventList.splice(i1,1)">删除</a-button>
               </a-col>
             </a-row>
             <a-row :gutter="24">
               <a-col :offset="1" :md="4" :sm="20">
                 <a-form-item>
                   <a-select v-model="analysisEvent.eventId" allow-clear placeholder="请选择事件" >
-                    <a-select-option v-for="(event,eIndex) in eventAllList" :key="eIndex" :value="event.id">{{
-                        event.displayName
-                      }}
-                    </a-select-option>
+                    <a-select-option v-for="(event,i2) in eventAllList" :value="event.id" >{{event.displayName}}</a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
@@ -51,16 +48,17 @@
               <a-col :md="3" :sm="24">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.propertyId" allow-clear placeholder="请选择">
-                    <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
+                    <a-select-option v-for="(item,i3) in propertyAllList"
+                                     :value="item.id">
                       {{ item.displayName }}
                     </a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :md="2" :sm="24">
+              <a-col :md="2" :sm="24" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId)">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.measure" allow-clear placeholder="请选择">
-                    <a-select-option v-for="(item,mIndex) in measureTypeDictTypeDropDown" :key="mIndex" :value="item.code">{{
+                    <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown"  :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
                         item.name
                       }}
                     </a-select-option>
@@ -74,72 +72,76 @@
           </div>
           <a-row :gutter="24">
             <a-col :md="8" :sm="8">
-              <a-button type="link" icon="plus" @click="() => analysisParam.eventList.push({eventId:'',property: {propertyId: '',measure: ''}})">指标</a-button>
+              <a-button type="link" icon="plus" @click="() => analysisParam.eventList.push({property: {}})">指标</a-button>
             </a-col>
           </a-row>
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c;font-size: small">筛选条件</span>
           </a-divider>
-          <a-row :gutter="24" v-for="(aFilter,afIndex) in analysisParam.filterList" :key="afIndex">
+          <a-row :gutter="24" v-for="(aFilter,i5) in analysisParam.filterList" :key="i5">
             <a-col :md="4" :sm="12">
               <a-form-item>
-                <a-select v-model="aFilter.id" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
+                <a-select v-model="aFilter.propertyId" allow-clear placeholder="请选择" default-value="0">
+                  <a-select-option v-for="(item,i6) in propertyAllList" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="2" :sm="24">
+            <a-col :md="2" :sm="24" v-if="checkFilterMeasureShow(aFilter.propertyId)">
               <a-form-item label="">
                 <a-select v-model="aFilter.measure" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,ftIndex) in filterTypeDictTypeDropDown" :key="ftIndex" :value="item.code">
+                  <a-select-option v-for="(item,i7) in filterTypeDictTypeDropDown" :value="item.code">
                     {{ item.name }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="12">
-              <a-form-item label="">
+            <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.measure)">
+              <a-form-item label="" v-if="aFilter.measure == 'RANGE'">
                 <a-range-picker :style="{width: '350px'}" showTime/>
+              </a-form-item>
+              <a-form-item label="" >
+                <a-input />
               </a-form-item>
             </a-col>
           </a-row>
           <a-row :gutter="24">
             <a-col :md="8" :sm="8">
-              <a-button type="link" icon="plus" @click="() => analysisParam.filterList.push({propertyId:'',measure:''})">添加</a-button>
+              <a-button type="link" icon="plus" @click="() => analysisParam.filterList.push({})">添加</a-button>
             </a-col>
           </a-row>
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c ;font-size: small">按*分组</span>
           </a-divider>
-          <a-row :gutter="24" v-for="(aDimension,adIndex) in analysisParam.dimensionList" :key="adIndex">
+          <a-row :gutter="24" v-for="(aDimension,i8) in analysisParam.dimensionList">
             <a-col :md="4" :sm="12">
               <a-form-item>
                 <a-select v-model="aDimension.propertyId" allow-clear placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
+                  <a-select-option v-for="(item,i9) in propertyAllList"  :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="1" :sm="12">
+            <a-col :md="1" :sm="12" v-if="checkGroupDimensionUnitShow(aDimension.propertyId)">
               <a-form-item>
                 <a-button type="link" shape="round" icon="setting"></a-button>
               </a-form-item>
             </a-col>
             <a-col :md="2" :sm="12" v-if="analysisParam.dimensionList.length>1">
               <a-form-item>
-                <a-button type="link" icon="delete" @click="() => analysisParam.dimensionList.splice(adIndex,1)">删除</a-button>
+                <a-button type="link" icon="delete" @click="() => analysisParam.dimensionList.splice(i8,1)">删除</a-button>
               </a-form-item>
             </a-col>
-            <a-col :md="1" :sm="12" v-if="adIndex==analysisParam.dimensionList.length-1">
+            <a-col :md="1" :sm="12" v-if="i8==analysisParam.dimensionList.length-1">
               <a-form-item>
-                <a-button type="link" icon="plus" @click="() => analysisParam.dimensionList.push({propertyId:null})" >添加</a-button>
+                <a-button type="link" icon="plus" @click="() => analysisParam.dimensionList.push({})" >添加</a-button>
               </a-form-item>
             </a-col>
           </a-row>
 
+          <!-- 展示属性 -->
           <a-divider orientation="left" plain style="margin: 0px;margin-bottom: 5px">
             <span style="color: #8c8c8c;font-size: small">按*查看</span>
           </a-divider>
@@ -147,7 +149,7 @@
             <a-col :md="4" :sm="24">
               <a-form-item label="">
                 <a-select v-model="analysisParam.displayDimension.propertyId" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,pIndex) in propertyAllList" :key="pIndex" :value="item.id">
+                  <a-select-option v-for="(item,i10) in propertyAllList"   :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -155,15 +157,22 @@
             </a-col>
             <a-col :md="2" :sm="24">
               <a-form-item label="">
-                <a-select v-model="analysisParam.displayDimension.measure" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,index) in filterTypeDictTypeDropDown" :key="index" :value="item.code">
+                <a-select
+                  v-model="analysisParam.displayDimension.measure"
+                  allow-clear
+                  placeholder="请选择"
+                  v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId)">
+                  <a-select-option
+                    v-for="(item,i11) in filterTypeDictTypeDropDown"
+                    :value="item.code"
+                    v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId,item.code)">
                     {{ item.name }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="12">
-              <a-form-item label="">
+              <a-form-item label="" v-if="analysisParam.displayDimension.measure == 'RANGE'">
                 <a-range-picker :style="{width: '350px'}" showTime/>
               </a-form-item>
             </a-col>
@@ -194,10 +203,10 @@
                   <a-icon type="ellipsis" class="ant-dropdown-link"></a-icon>
                   <a-menu slot="overlay">
                     <a-menu-item>
-                      <a href="javascript:;">操作一</a>
+                      <a href="javascript:;">折线图</a>
                     </a-menu-item>
                     <a-menu-item>
-                      <a href="javascript:;">操作二</a>
+                      <a href="javascript:;">柱状图</a>
                     </a-menu-item>
                   </a-menu>
                 </a-dropdown>
@@ -212,9 +221,8 @@
   </div>
 </template>
 <script>
-import {boardDataSourceDelete, boardDataSourceExport} from '@/api/modular/board/boardDataSourceManage'
-import {boardEventList} from '@/api/modular/board/boardEventManage'
-import {boardPropertyList} from '@/api/modular/board/boardPropertyManage'
+import {boardEventAnalysisList} from '@/api/modular/board/boardEventManage'
+import {boardPropertyAnalysisList} from '@/api/modular/board/boardPropertyManage'
 import {boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage'
 
 export default {
@@ -225,55 +233,19 @@ export default {
       advanced: false,
       // 查询参数
       analysisParam: {
-        id: '1',
-        displayName: '',
-        type: '',
-        chartConfig: '',
-        subLogic: '',
-        sort: '',
-        eventList: [{
-          id:'',
-          analysisId:'',
-          eventId:'',
-          sort:'',
-          subLogic:'',
-          displayName:'',
-          property: {
-            propertyId:'',
-            measure:'',
-          },
-        }],
-        propertyList: [{
-          propertyId:'',
-          property:{
-            id:'',
-            displayName:'',
-            propertyGroupId:'',
-            dataSourceId:'',
-            tableId:'',
-            tableColumnId:'',
-            measure:'',
-            value:'',
-            valueType:'',
-            unit:'',
-            unitType:'',
-            isDefault:'',
-            remark:''
-          }
-        }],
-        dimensionList: [{
-          propertyId:'',
-        }],
-        filterList: [{
-          propertyId:''
-        }],
+        type: 'EVENT',
+        subLogic: 'AND',
+        eventList: [{eventId:null,property: {propertyId:null}}],
+        propertyList: [],
+        dimensionList: [{propertyId:'0'}],
+        filterList: [],
         displayDimension:{
-          propertyId:'',
+          property:{}
         },
       },
       tstyle: {'padding-bottom': '0px', 'margin-bottom': '10px'},
-      eventAllList: [],
-      propertyAllList: [],
+      eventAllList: [{id:''}],
+      propertyAllList: [{id:''}],
       filterTypeDictTypeDropDown: [],
       measureTypeDictTypeDropDown: [],
       analysisData: {
@@ -281,6 +253,30 @@ export default {
         xAxis: [],
         series:[],
       },
+      filterMeasure:{
+        'NUMBER' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN',],
+        'STRING' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE'],
+        'BOOLEAN' : ['IS_NULL','NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'IS_TRUE','IS_FALSE'],
+        'DATE_TIME' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR',]
+      },
+      filterParam: {
+        'INPUT':{
+          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
+        },
+        'SELECT':{
+          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
+        },
+        'RANGE':{
+          'NUMBER': ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR']
+        }
+      },
+      indicatorMeasure:{
+        'NUMBER' : ['COUNT','DISTINCT','SUM','AVG','MAX','MIN'],
+        'STRING' : ['COUNT','DISTINCT'],
+        'BOOLEAN' : ['COUNT','DISTINCT'],
+        'DATE_TIME' : ['COUNT','DISTINCT','MAX','MIN']
+      },
+
     }
   },
   created() {
@@ -332,22 +328,15 @@ export default {
       this.filterTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_filter_type')
       this.measureTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_measure_type')
 
-      boardPropertyList().then(res => {
+      boardPropertyAnalysisList().then(res => {
         this.propertyAllList = res.data
-        this.propertyAllList.unshift({id: "COUNT", displayName: "总次数"})
+        this.propertyAllList.unshift({id: "0", displayName: "总次数"})
+        this.analysisParam.eventList[0].property.propertyId = this.propertyAllList[0].id
       })
-      boardEventList().then(res => {
+      boardEventAnalysisList().then(res => {
         this.eventAllList = res.data
-        // this.analysisParam.eventList[0] = {
-        //   eventId: this.eventAllList[0].id,
-        //   property:{
-        //     propertyId : 'COUNT'
-        //   }
-        // }
+        this.analysisParam.eventList[0].eventId = this.eventAllList[0].id
       })
-    },
-    showAnalysisVo(){
-      console.log(this.analysisParam)
     },
     getAnalysisEventDisplayName(e) {
       var analysisName = e.displayName;
@@ -357,29 +346,25 @@ export default {
           return analysisName;
         }
         analysisName = event.displayName + " 的 "
-        var analysisProperty = this.getAnalysisEventProperty(e.eventId);
+        var analysisProperty = this.getAnalysisEventProperty(e.property.propertyId);
         if (analysisProperty) {
-          var propertyName = analysisProperty.displayName;
-          if (!propertyName && analysisProperty.property) {
-            propertyName = analysisProperty.property.displayName
-            if (analysisProperty.property.id != "COUNT") {
-              propertyName += "总次数"
+          analysisName += analysisProperty.displayName
+          if(analysisProperty.column){
+            let measureDict = this.measureTypeDictTypeDropDown.filter(i => i.code === e.property.measure)[0]
+            if(measureDict){
+              analysisName += measureDict.name
             }
           }
-          analysisName += propertyName
+        }else {
+          analysisName += "总次数"
         }
       }
       return analysisName
     },
     getAnalysisEventProperty(e) {
-      var analysisProperty = this.analysisParam.propertyList.filter(i => i.analysisEventId === e)[0]
-      if (!analysisProperty) {
-        analysisProperty = {}
-        analysisProperty.property = {id: "COUNT", displayName: "总次数", measure: "COUNT"}
-      } else {
-        analysisProperty.property = this.propertyAllList.filter(i => i.id === e.propertyId)[0]
-      }
-      return analysisProperty
+      let property = this.propertyAllList.filter(i => i.id === e)[0]
+
+      return property
     },
     queryAnalysisData() {
       var that = this;
@@ -401,61 +386,41 @@ export default {
           index++;
         })
         that.drawChart();
-    })
+      })
     },
-    typeFilter(t) {
-      const values = this.dataSourceTypeDictTypeDropDown.filter(item => item.code === t)
-      if (values.length > 0) {
-        return values[0].name
+    checkGroupDimensionUnitShow(pId){
+      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
       }
+      if (property.column.columnType == 'NUMBER'){
+        return true;
+      }
+      return false;
     },
-    /**
-     * 单个删除
-     */
-    singleDelete(record) {
-      const param = [{'id': record.id}]
-      this.boardDataSourceDelete(param)
+    checkFilterParamShow(e){
+      return false;
     },
-    /**
-     * 批量删除
-     */
-    batchDelete() {
-      const paramIds = this.selectedRowKeys.map((d) => {
-        return {'id': d}
-      })
-      this.boardDataSourceDelete(paramIds)
+    checkFilterMeasureShow(pId,measureCode){
+      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
+      }
+      if(measureCode){
+        return this.indicatorMeasure[property.column.columnType].includes(measureCode)
+      }
+      return true;
     },
-    boardDataSourceDelete(record) {
-      boardDataSourceDelete(record).then((res) => {
-        if (res.success) {
-          this.$message.success('删除成功')
-          this.$refs.table.clearRefreshSelected()
-        } else {
-          this.$message.error('删除失败') // + res.message
-        }
-      })
+    checkDisplayDimensionMeasureShow(pId,measureCode){
+      let property = this.propertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
+      }
+      if(measureCode){
+        return this.filterMeasure[property.column.columnType].includes(measureCode)
+      }
+      return true;
     },
-    toggleAdvanced() {
-      this.advanced = !this.advanced
-    },
-    /**
-     * 批量导出
-     */
-    batchExport() {
-      const paramIds = this.selectedRowKeys.map((d) => {
-        return {'id': d}
-      })
-      boardDataSourceExport(paramIds).then((res) => {
-        this.$refs.batchExport.downloadfile(res)
-      })
-    },
-    handleOk() {
-      this.$refs.table.refresh()
-    },
-    onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    }
   }
 }
 </script>

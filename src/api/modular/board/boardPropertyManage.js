@@ -20,6 +20,20 @@ export function boardPropertyPage (parameter) {
  * @author Young-Pastor
  * @date 2022-06-20 11:59:41
  */
+export function boardPropertyAnalysisList (parameter) {
+  return axios({
+    url: '/boardProperty/analysisList',
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
+ * 属性配置列表
+ *
+ * @author Young-Pastor
+ * @date 2022-06-20 11:59:41
+ */
 export function boardPropertyList (parameter) {
   return axios({
     url: '/boardProperty/list',
