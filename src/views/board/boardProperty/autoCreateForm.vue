@@ -12,26 +12,6 @@
         <a-row :gutter="24">
           <a-col :md="24" :sm="24">
             <a-form-item
-              label="属性分组"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol"
-              has-feedback
-            >
-              <a-tree-select
-                v-decorator="['propertyGroupId', {rules: [{ required: true, message: '请选择属性分组！' }]}]"
-                style="width: 100%"
-                :dropdownStyle="{ maxHeight: '300px', overflow: 'auto' }"
-                :treeData="propertyGroupTree"
-                placeholder="请选择属性分组"
-              >
-                <span slot="title" slot-scope="{ id }">{{ id }}
-                </span>
-              </a-tree-select>
-            </a-form-item>
-          </a-col>
-
-          <a-col :md="24" :sm="24">
-            <a-form-item
               label="数据库"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
