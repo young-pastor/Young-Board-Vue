@@ -18,15 +18,14 @@
                     style="display: inline-block; vertical-align: middle"
                     :compact="true"
                   >
-                    <a-button type="text" disabled style="background: #FFFFFF;border: 0px">
+                    <a-button type="text" disabled style="background: #FFFFFF;border: 0px" >
                       {{ getAnalysisEventDisplayName(analysisEvent) }}
                     </a-button>
-                    <a-button type="link" size="small" icon="edit"></a-button>
                   </a-button-group>
                 </a-form-item>
               </a-col>
               <a-col :md="2" :sm="24">
-                <a-button type="link" shape="round" icon="copy" @click="() => analysisParam.eventList.push(analysisEvent)">复制</a-button>
+                <a-button type="link" shape="round" icon="copy" @click="() => analysisParam.eventList.push(copyAnalysisAttr(analysisEvent))">复制</a-button>
               </a-col>
               <a-col :md="1" :sm="24" v-if="analysisParam.eventList.length>1">
                 <a-button type="link" shape="round" icon="delete" @click="() => analysisParam.eventList.splice(i1,1)">删除</a-button>
@@ -109,7 +108,7 @@
             </a-col>
             <a-col :md="2" :sm="12" >
               <a-form-item>
-                <a-button type="link" icon="delete" @click="() => analysisParam.filterList.splice(i7,1)">删除</a-button>
+                <a-button type="link" icon="delete" @click="() => analysisParam.filterList.splice(i5,1)">删除</a-button>
               </a-form-item>
             </a-col>
           </a-row>
@@ -286,6 +285,18 @@ export default {
     this.loadDropDownData()
   },
   methods: {
+    copyAnalysisAttr(obj){
+      if(typeof obj !== "object" && typeof obj !== 'function') {
+        return obj;
+      }
+      var o = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
+      for(var i in obj) {
+        if(obj.hasOwnProperty(i)){
+          o[i] = typeof obj[i] === "object" ? this.copyAnalysisAttr(obj[i]) : obj[i];
+        }
+      }
+      return o;
+    },
     drawChart() {
       if(!this.analysisChartInstance){
         this.analysisChartInstance = this.$echarts.init(document.getElementById("analysis_chart"));
