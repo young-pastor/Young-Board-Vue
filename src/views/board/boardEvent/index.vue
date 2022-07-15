@@ -94,7 +94,7 @@
           <template class="table-operator" slot="operator" v-if="hasPerm('boardEvent:add')">
             <a-button type="primary" v-if="hasPerm('boardEvent:add')" icon="plus" @click="$refs.addForm.add()">新增元事件
             </a-button>
-            <a-button v-if="hasPerm('boardEvent:add')" icon="refresh" @click="$refs.autoCreateForm.add()">自动同步元事件
+            <a-button v-if="hasPerm('boardEvent:add')" icon="sync" @click="$refs.autoCreateForm.add()">自动同步元事件
             </a-button>
             <a-button
               type="danger"

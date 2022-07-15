@@ -34,7 +34,7 @@
             <a-row :gutter="24">
               <a-col :offset="1" :md="4" :sm="20">
                 <a-form-item>
-                  <a-select v-model="analysisEvent.eventId" allow-clear placeholder="请选择事件" >
+                  <a-select v-model="analysisEvent.eventId" placeholder="请选择事件" >
                     <a-select-option v-for="(event,i2) in eventAllList" :value="event.id" >{{event.displayName}}</a-select-option>
                   </a-select>
                 </a-form-item>
@@ -46,7 +46,7 @@
               </a-col>
               <a-col :md="3" :sm="24">
                 <a-form-item label="">
-                  <a-select v-model="analysisEvent.property.propertyId" allow-clear placeholder="请选择">
+                  <a-select v-model="analysisEvent.property.propertyId" placeholder="请选择">
                     <a-select-option v-for="(item,i3) in eventPropertyAllList"
                                      :value="item.id">
                       {{ item.displayName }}
@@ -56,7 +56,7 @@
               </a-col>
               <a-col :md="2" :sm="24" v-if="checkEventPropertyMeasureShow(analysisEvent.property.propertyId)">
                 <a-form-item label="">
-                  <a-select v-model="analysisEvent.property.measure" allow-clear placeholder="请选择">
+                  <a-select v-model="analysisEvent.property.measure" placeholder="请选择">
                     <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown"  :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
                         item.name
                       }}
@@ -80,7 +80,7 @@
           <a-row :gutter="24" v-for="(aFilter,i5) in analysisParam.filterList" :key="i5">
             <a-col :md="4" :sm="12">
               <a-form-item>
-                <a-select v-model="aFilter.propertyId" allow-clear placeholder="请选择" default-value="0">
+                <a-select v-model="aFilter.propertyId" placeholder="请选择" default-value="0">
                   <a-select-option v-for="(item,i6) in filterPropertyAllList" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
@@ -89,7 +89,7 @@
             </a-col>
             <a-col :md="2" :sm="24" v-if="checkFilterMeasureShow(aFilter.propertyId)">
               <a-form-item label="">
-                <a-select v-model="aFilter.measure" allow-clear placeholder="请选择">
+                <a-select v-model="aFilter.measure" placeholder="请选择">
                   <a-select-option v-for="(item,i7) in filterTypeDictTypeDropDown" :value="item.code">
                     {{ item.name }}
                   </a-select-option>
@@ -123,7 +123,7 @@
           <a-row :gutter="24" v-for="(aDimension,i8) in analysisParam.dimensionList">
             <a-col :md="4" :sm="12">
               <a-form-item>
-                <a-select v-model="aDimension.propertyId" allow-clear placeholder="请选择" default-value="0">
+                <a-select v-model="aDimension.propertyId" placeholder="请选择" default-value="0">
                   <a-select-option v-for="(item,i9) in groupPropertyAllList"  :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
@@ -131,9 +131,9 @@
               </a-form-item>
             </a-col>
             <a-col :md="1" :sm="12" v-if="checkGroupDimensionUnitShow(aDimension.propertyId)">
-              <a-form-item>
-                <a-button type="link" shape="round" icon="setting"></a-button>
-              </a-form-item>
+              <a-select-option v-for="(item,i9) in groupPropertyAllList"  :value="item.id">
+                {{ item.displayName }}
+              </a-select-option>
             </a-col>
             <a-col :md="2" :sm="12" v-if="analysisParam.dimensionList.length>1">
               <a-form-item>
@@ -154,8 +154,8 @@
           <a-row :gutter="24" >
             <a-col :md="4" :sm="24">
               <a-form-item label="">
-                <a-select v-model="analysisParam.displayDimension.propertyId" allow-clear placeholder="请选择">
-                  <a-select-option v-for="(item,i10) in groupPropertyAllList"   :value="item.id">
+                <a-select v-model="analysisParam.displayDimension.propertyId" placeholder="请选择">
+                  <a-select-option v-for="(item,i10) in groupPropertyAllList" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
@@ -164,19 +164,33 @@
             <a-col :md="2" :sm="24">
               <a-form-item label="">
                 <a-select
-                  v-model="analysisParam.displayDimension.measure"
-                  allow-clear
+                  v-model="analysisParam.displayDimension.unit"
                   placeholder="请选择"
-                  v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId)">
+                  v-if="checkDisplayDimensionUnitShow(analysisParam.displayDimension.propertyId)">
                   <a-select-option
-                    v-for="(item,i11) in filterTypeDictTypeDropDown"
+                    v-for="(item,i11) in unitDictTypeDropDown"
                     :value="item.code"
-                    v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId,item.code)">
+                    v-if="checkDisplayDimensionUnitShow(analysisParam.displayDimension.propertyId,item.code)">
                     {{ item.name }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
+<!--            <a-col :md="2" :sm="24">-->
+<!--              <a-form-item label="">-->
+<!--                <a-select-->
+<!--                  v-model="analysisParam.displayDimension.measure"-->
+<!--                  placeholder="请选择"-->
+<!--                  v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId)">-->
+<!--                  <a-select-option-->
+<!--                    v-for="(item,i11) in filterTypeDictTypeDropDown"-->
+<!--                    :value="item.code"-->
+<!--                    v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId,item.code)">-->
+<!--                    {{ item.name }}-->
+<!--                  </a-select-option>-->
+<!--                </a-select>-->
+<!--              </a-form-item>-->
+<!--            </a-col>-->
             <a-col :md="4" :sm="12">
               <a-form-item label="" v-if="analysisParam.displayDimension.measure == 'RANGE'">
                 <a-range-picker :style="{width: '350px'}" showTime/>
@@ -248,7 +262,8 @@ export default {
         filterList: [],
         displayDimension:{
           propertyId:null,
-          type:'ROW'
+          type:'ROW',
+          unitType:'STEP'
         },
       },
       tstyle: {'padding-bottom': '0px', 'margin-bottom': '10px'},
@@ -258,6 +273,8 @@ export default {
       groupPropertyAllList: [],
       filterTypeDictTypeDropDown: [],
       measureTypeDictTypeDropDown: [],
+      unitTypeDictTypeDropDown: [],
+      unitDictTypeDropDown: [],
       analysisData: {
         legend: [],
         xAxis:  [],
@@ -267,7 +284,7 @@ export default {
         'NUMBER' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN',],
         'STRING' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE'],
         'BOOLEAN' : ['IS_NULL','NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'IS_TRUE','IS_FALSE'],
-        'DATE_TIME' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LEAST_SEVEN_DAY','LEAST_FOURTEEN_DAY','LEAST_ONE_MONTH','LEAST_FOUR_MONTH','LEAST_HAFT_YEAR','LEAST_YEAR',]
+        'DATE_TIME' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LAST_SEVEN_DAY','LAST_FOURTEEN_DAY','LAST_MONTH','LAST_QUARTER','LAST_HAFT_YEAR','LAST_YEAR',]
       },
       filterParam: {
         'INPUT': ['EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN']
@@ -278,7 +295,10 @@ export default {
         'BOOLEAN' : ['COUNT','DISTINCT'],
         'DATE_TIME' : ['COUNT','DISTINCT','MAX','MIN']
       },
-      analysisChartInstance:null
+      analysisChartInstance:null,
+      dimensionUnit: {
+        'DATE_TIME' : ['SECOND','MINUTE','HOUR','DAY','WEEK','MONTH','YEAR']
+      },
     }
   },
   created() {
@@ -341,6 +361,8 @@ export default {
     loadDropDownData() {
       this.filterTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_filter_type')
       this.measureTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_measure_type')
+      this.unitTypeDictTypeDropDown = this.$options.filters['dictData']('board_dimension_unit_type')
+      this.unitDictTypeDropDown = this.$options.filters['dictData']('board_dimension_unit')
 
       boardPropertyAnalysisList().then(res => {
         this.eventPropertyAllList = this.eventPropertyAllList.concat(res.data)
@@ -417,6 +439,20 @@ export default {
       }
       if (property.column.columnType == 'NUMBER'){
         return true;
+      }
+      return false;
+    },
+    checkDisplayDimensionUnitShow(pId,unit){
+      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
+      if(!property || !property.column){
+        return false;
+      }
+      if(unit){
+        return this.dimensionUnit[property.column.columnType].includes(unit)
+      } else {
+        if(this.dimensionUnit[property.column.columnType]){
+          return true;
+        }
       }
       return false;
     },
