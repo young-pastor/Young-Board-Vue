@@ -51,7 +51,8 @@ import {
   Empty,
   PageHeader,
   Descriptions,
-  Result
+  Result,
+  Collapse
 } from 'ant-design-vue'
 // import VueCropper from 'vue-cropper'
 
@@ -64,6 +65,7 @@ Vue.use(Switch)
 Vue.use(Radio)
 Vue.use(Checkbox)
 Vue.use(Select)
+Vue.use(Collapse)
 Vue.use(Card)
 Vue.use(Form)
 Vue.use(Row)

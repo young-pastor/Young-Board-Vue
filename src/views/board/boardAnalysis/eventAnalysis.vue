@@ -6,7 +6,7 @@
           <div v-for="(analysisEvent,i1) in analysisParam.eventList">
             <a-row :gutter="24" style="margin-top: 10px">
               <a-col :md="1" :sm="12">
-                <a-form-item label="">
+                <a-form-item>
                   <a-button type="primary" shape="circle" size="small" disabled>
                     {{ String.fromCharCode(i1 + 65) }}
                   </a-button>
@@ -35,7 +35,7 @@
               <a-col :offset="1" :md="4" :sm="20">
                 <a-form-item>
                   <a-select v-model="analysisEvent.eventId" placeholder="请选择事件" >
-                    <a-select-option v-for="(event,i2) in eventAllList" :value="event.id" >{{event.displayName}}</a-select-option>
+                    <a-select-option v-for="(event,i2) in eventAllList" :value="event.id" >{{ event.displayName }}</a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
@@ -47,8 +47,9 @@
               <a-col :md="3" :sm="24">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.propertyId" placeholder="请选择">
-                    <a-select-option v-for="(item,i3) in eventPropertyAllList"
-                                     :value="item.id">
+                    <a-select-option
+                      v-for="(item,i3) in eventPropertyAllList"
+                      :value="item.id">
                       {{ item.displayName }}
                     </a-select-option>
                   </a-select>
@@ -57,9 +58,9 @@
               <a-col :md="2" :sm="24" v-if="checkEventPropertyMeasureShow(analysisEvent.property.propertyId)">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.measure" placeholder="请选择">
-                    <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown"  :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
-                        item.name
-                      }}
+                    <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown" :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
+                      item.name
+                    }}
                     </a-select-option>
                   </a-select>
                 </a-form-item>
@@ -124,14 +125,14 @@
             <a-col :md="4" :sm="12">
               <a-form-item>
                 <a-select v-model="aDimension.propertyId" placeholder="请选择" default-value="0">
-                  <a-select-option v-for="(item,i9) in groupPropertyAllList"  :value="item.id">
+                  <a-select-option v-for="(item,i9) in groupPropertyAllList" :value="item.id">
                     {{ item.displayName }}
                   </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :md="1" :sm="12" v-if="checkGroupDimensionUnitShow(aDimension.propertyId)">
-              <a-select-option v-for="(item,i9) in groupPropertyAllList"  :value="item.id">
+              <a-select-option v-for="(item,i9) in groupPropertyAllList" :value="item.id">
                 {{ item.displayName }}
               </a-select-option>
             </a-col>
@@ -161,12 +162,11 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="2" :sm="24">
+            <a-col :md="2" :sm="24" v-if="checkDisplayDimensionUnitShow(analysisParam.displayDimension.propertyId)">
               <a-form-item label="">
                 <a-select
                   v-model="analysisParam.displayDimension.unit"
-                  placeholder="请选择"
-                  v-if="checkDisplayDimensionUnitShow(analysisParam.displayDimension.propertyId)">
+                  placeholder="请选择">
                   <a-select-option
                     v-for="(item,i11) in unitDictTypeDropDown"
                     :value="item.code"
@@ -176,21 +176,21 @@
                 </a-select>
               </a-form-item>
             </a-col>
-<!--            <a-col :md="2" :sm="24">-->
-<!--              <a-form-item label="">-->
-<!--                <a-select-->
-<!--                  v-model="analysisParam.displayDimension.measure"-->
-<!--                  placeholder="请选择"-->
-<!--                  v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId)">-->
-<!--                  <a-select-option-->
-<!--                    v-for="(item,i11) in filterTypeDictTypeDropDown"-->
-<!--                    :value="item.code"-->
-<!--                    v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId,item.code)">-->
-<!--                    {{ item.name }}-->
-<!--                  </a-select-option>-->
-<!--                </a-select>-->
-<!--              </a-form-item>-->
-<!--            </a-col>-->
+            <!--            <a-col :md="2" :sm="24">-->
+            <!--              <a-form-item label="">-->
+            <!--                <a-select-->
+            <!--                  v-model="analysisParam.displayDimension.measure"-->
+            <!--                  placeholder="请选择"-->
+            <!--                  v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId)">-->
+            <!--                  <a-select-option-->
+            <!--                    v-for="(item,i11) in filterTypeDictTypeDropDown"-->
+            <!--                    :value="item.code"-->
+            <!--                    v-if="checkDisplayDimensionMeasureShow(analysisParam.displayDimension.propertyId,item.code)">-->
+            <!--                    {{ item.name }}-->
+            <!--                  </a-select-option>-->
+            <!--                </a-select>-->
+            <!--              </a-form-item>-->
+            <!--            </a-col>-->
             <a-col :md="4" :sm="12">
               <a-form-item label="" v-if="analysisParam.displayDimension.measure == 'RANGE'">
                 <a-range-picker :style="{width: '350px'}" showTime/>
@@ -219,18 +219,18 @@
           <div slot="extra" style="height: inherit;">
             <!-- style="bottom: 12px;display: inline-block;" -->
             <span class="dashboard-analysis-iconGroup">
-                <a-dropdown :trigger="['click']" placement="bottomLeft">
-                  <a-icon type="ellipsis" class="ant-dropdown-link"></a-icon>
-                  <a-menu slot="overlay">
-                    <a-menu-item>
-                      <a href="javascript:;">折线图</a>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <a href="javascript:;">柱状图</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </span>
+              <a-dropdown :trigger="['click']" placement="bottomLeft">
+                <a-icon type="ellipsis" class="ant-dropdown-link"></a-icon>
+                <a-menu slot="overlay">
+                  <a-menu-item>
+                    <a href="javascript:;">折线图</a>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <a href="javascript:;">柱状图</a>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
+            </span>
           </div>
           <div>
             <div id="analysis_chart" style="height: 300px;width: 100%"></div>
@@ -241,9 +241,9 @@
   </div>
 </template>
 <script>
-import {boardEventAnalysisList} from '@/api/modular/board/boardEventManage'
-import {boardPropertyAnalysisList} from '@/api/modular/board/boardPropertyManage'
-import {boardAnalysisAnalysis, boardAnalysisAnalysisById} from '@/api/modular/board/boardAnalysisManage'
+import { boardEventAnalysisList } from '@/api/modular/board/boardEventManage'
+import { boardPropertyAnalysisList } from '@/api/modular/board/boardPropertyManage'
+import { boardAnalysisAnalysis, boardAnalysisAnalysisById } from '@/api/modular/board/boardAnalysisManage'
 
 export default {
   components: {},
@@ -256,17 +256,17 @@ export default {
         id: 1,
         type: 'EVENT',
         subLogic: 'AND',
-        eventList: [{eventId:null,property: {propertyId:null}}],
+        eventList: [{ eventId: null, property: { propertyId: null } }],
         propertyList: [],
-        dimensionList: [{propertyId: 0 }],
+        dimensionList: [{ propertyId: 0 }],
         filterList: [],
-        displayDimension:{
-          propertyId:null,
-          type:'ROW',
-          unitType:'STEP'
-        },
+        displayDimension: {
+          propertyId: null,
+          type: 'ROW',
+          unitType: 'STEP'
+        }
       },
-      tstyle: {'padding-bottom': '0px', 'margin-bottom': '10px'},
+      tstyle: { 'padding-bottom': '0px', 'margin-bottom': '10px' },
       eventAllList: [],
       eventPropertyAllList: [],
       filterPropertyAllList: [],
@@ -277,57 +277,58 @@ export default {
       unitDictTypeDropDown: [],
       analysisData: {
         legend: [],
-        xAxis:  [],
-        series: [],
+        xAxis: [],
+        series: []
       },
-      filterMeasure:{
-        'NUMBER' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN',],
-        'STRING' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','IS_TRUE','IS_FALSE','EQUAL','NOT_EQUAL','IN','NOT_IN','LIKE','LEFT_LIKE','RIGHT_LIKE','NOT_LIKE','MATCH_CASE','MATCH_IGNORE_CASE','NOT_MATCH_CASE','NOT_MATCH_IGNORE_CASE'],
-        'BOOLEAN' : ['IS_NULL','NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'IS_TRUE','IS_FALSE'],
-        'DATE_TIME' : ['IS_NULL','NOT_NULL','IS_EMPTY','NOT_EMPTY','EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN','LAST_SEVEN_DAY','LAST_FOURTEEN_DAY','LAST_MONTH','LAST_QUARTER','LAST_HAFT_YEAR','LAST_YEAR',]
+      filterMeasure: {
+        'NUMBER': ['IS_NULL', 'NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_EQUAL', 'GREATER_THAN', 'GREATER_THAN_EQUAL', 'RANGE', 'IN', 'NOT_IN'],
+        'STRING': ['IS_NULL', 'NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'IS_TRUE', 'IS_FALSE', 'EQUAL', 'NOT_EQUAL', 'IN', 'NOT_IN', 'LIKE', 'LEFT_LIKE', 'RIGHT_LIKE', 'NOT_LIKE', 'MATCH_CASE', 'MATCH_IGNORE_CASE', 'NOT_MATCH_CASE', 'NOT_MATCH_IGNORE_CASE'],
+        'BOOLEAN': ['IS_NULL', 'NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'IS_TRUE', 'IS_FALSE'],
+        'DATE_TIME': ['IS_NULL', 'NOT_NULL', 'IS_EMPTY', 'NOT_EMPTY', 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_EQUAL', 'GREATER_THAN', 'GREATER_THAN_EQUAL', 'RANGE', 'IN', 'NOT_IN', 'LAST_SEVEN_DAY', 'LAST_FOURTEEN_DAY', 'LAST_MONTH', 'LAST_QUARTER', 'LAST_HAFT_YEAR', 'LAST_YEAR']
       },
       filterParam: {
-        'INPUT': ['EQUAL','NOT_EQUAL','LESS_THAN','LESS_THAN_EQUAL','GREATER_THAN','GREATER_THAN_EQUAL','RANGE','IN','NOT_IN']
+        'INPUT': ['EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_EQUAL', 'GREATER_THAN', 'GREATER_THAN_EQUAL', 'RANGE', 'IN', 'NOT_IN']
       },
-      indicatorMeasure:{
-        'NUMBER' : ['COUNT','DISTINCT','SUM','AVG','MAX','MIN'],
-        'STRING' : ['COUNT','DISTINCT'],
-        'BOOLEAN' : ['COUNT','DISTINCT'],
-        'DATE_TIME' : ['COUNT','DISTINCT','MAX','MIN']
+      indicatorMeasure: {
+        'NUMBER': ['COUNT', 'DISTINCT', 'SUM', 'AVG', 'MAX', 'MIN'],
+        'STRING': ['COUNT', 'DISTINCT'],
+        'BOOLEAN': ['COUNT', 'DISTINCT'],
+        'DATE_TIME': ['COUNT', 'DISTINCT', 'MAX', 'MIN']
       },
-      analysisChartInstance:null,
+      analysisChartInstance: null,
       dimensionUnit: {
-        'DATE_TIME' : ['SECOND','MINUTE','HOUR','DAY','WEEK','MONTH','YEAR']
-      },
+        'DATE_TIME': ['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR']
+      }
     }
   },
   created() {
     this.loadDropDownData()
   },
   methods: {
-    copyAnalysisAttr(obj){
-      if(typeof obj !== "object" && typeof obj !== 'function') {
-        return obj;
+    copyAnalysisAttr(obj) {
+      if (typeof obj !== 'object' && typeof obj !== 'function') {
+        return obj
       }
-      var o = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {};
-      for(var i in obj) {
-        if(obj.hasOwnProperty(i)){
-          o[i] = typeof obj[i] === "object" ? this.copyAnalysisAttr(obj[i]) : obj[i];
+      var o = Object.prototype.toString.call(obj) === '[object Array]' ? [] : {}
+      for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          o[i] = typeof obj[i] === 'object' ? this.copyAnalysisAttr(obj[i]) : obj[i]
         }
       }
-      return o;
+      return o
     },
     drawChart() {
-      if(!this.analysisChartInstance){
-        this.analysisChartInstance = this.$echarts.init(document.getElementById("analysis_chart"));
+      var that = this
+      if (!that.analysisChartInstance) {
+        that.analysisChartInstance = this.$echarts.init(document.getElementById('analysis_chart'))
         window.addEventListener('resize', function () {
-          this.analysisChartInstance.resize()
+          that.analysisChartInstance.resize()
         })
       }
       // 基于准备好的dom，初始化echarts实例
       // 指定图表的配置项和数据
-      let option = {
-        title: { text: ''},
+      const option = {
+        title: { text: '' },
         tooltip: {
           trigger: 'axis'
         },
@@ -354,9 +355,9 @@ export default {
           type: 'value'
         },
         series: this.analysisData.series
-      };
+      }
       // 使用刚指定的配置项和数据显示图表。
-      this.analysisChartInstance.setOption(option);
+      this.analysisChartInstance.setOption(option)
     },
     loadDropDownData() {
       this.filterTypeDictTypeDropDown = this.$options.filters['dictData']('board_column_filter_type')
@@ -366,11 +367,11 @@ export default {
 
       boardPropertyAnalysisList().then(res => {
         this.eventPropertyAllList = this.eventPropertyAllList.concat(res.data)
-        this.eventPropertyAllList.unshift({id: "0", displayName: "总次数"})
+        this.eventPropertyAllList.unshift({ id: '0', displayName: '总次数' })
         this.analysisParam.eventList[0].property.propertyId = this.eventPropertyAllList[0].id
         this.filterPropertyAllList = res.data
         this.groupPropertyAllList = this.groupPropertyAllList.concat(res.data)
-        this.groupPropertyAllList.unshift({id: "0", displayName: "总体"})
+        this.groupPropertyAllList.unshift({ id: '0', displayName: '总体' })
         this.analysisParam.dimensionList[0].propertyId = this.groupPropertyAllList[0].id
         this.analysisParam.displayDimension.propertyId = this.groupPropertyAllList[0].id
       })
@@ -380,122 +381,122 @@ export default {
       })
     },
     getAnalysisEventDisplayName(e) {
-      var analysisName = e.displayName;
+      var analysisName = e.displayName
       if (!analysisName) {
         var event = this.eventAllList.filter(i => i.id == e.eventId)[0]
-        if(!event){
-          return analysisName;
+        if (!event) {
+          return analysisName
         }
-        analysisName = event.displayName + " 的 "
+        analysisName = event.displayName + ' 的 '
         var analysisProperty = this.eventPropertyAllList.filter(i => i.id === e.property.propertyId)[0]
         if (analysisProperty) {
           analysisName += analysisProperty.displayName
-          if(analysisProperty.column){
-            let measureDict = this.measureTypeDictTypeDropDown.filter(i => i.code === e.property.measure)[0]
-            if(measureDict){
+          if (analysisProperty.column) {
+            const measureDict = this.measureTypeDictTypeDropDown.filter(i => i.code === e.property.measure)[0]
+            if (measureDict) {
               analysisName += measureDict.name
             }
           }
-        }else {
-          analysisName += "总次数"
+        } else {
+          analysisName += '总次数'
         }
       }
       return analysisName
     },
     queryAnalysisData() {
-      var that = this;
+      var that = this
       var analysis_param = {
           type: that.analysisParam.type,
           subLogic: that.analysisParam.subLogic,
           eventList: [].concat(that.analysisParam.eventList),
           propertyList: [].concat(that.analysisParam.propertyList),
           dimensionList: [].concat(that.analysisParam.dimensionList).concat(that.analysisParam.displayDimension),
-          filterList: [].concat(that.analysisParam.filterList),
+          filterList: [].concat(that.analysisParam.filterList)
       }
       boardAnalysisAnalysis(analysis_param).then(res => {
         that.analysisData.xAxis = []
         that.analysisData.legend = []
         that.analysisData.series = []
-        that.analysisData.xAxis = res.data.resultData.displayRow;
-        var index = 0;
-        res.data.resultData.groupRow.forEach(function (d){
+        that.analysisData.xAxis = res.data.resultData.displayRow
+        var index = 0
+        res.data.resultData.groupRow.forEach(function (d) {
           var dStr = JSON.stringify(d)
-          that.analysisData.legend.push(dStr);
+          that.analysisData.legend.push(dStr)
           that.analysisData.series.push({
             name: dStr,
             type: 'line',
             stack: 'Total',
             data: res.data.resultData.valueCol[index]
           })
-          index++;
+          index++
         })
-        this.drawChart();
+        this.drawChart()
       })
     },
-    checkGroupDimensionUnitShow(pId){
-      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkGroupDimensionUnitShow(pId) {
+      const property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if (property.column.columnType == 'NUMBER'){
-        return true;
+      if (property.column.columnType == 'NUMBER') {
+        return true
       }
-      return false;
+      return false
     },
-    checkDisplayDimensionUnitShow(pId,unit){
-      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkDisplayDimensionUnitShow(pId, unit) {
+      const property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if(unit){
+      if (unit) {
         return this.dimensionUnit[property.column.columnType].includes(unit)
       } else {
-        if(this.dimensionUnit[property.column.columnType]){
-          return true;
+        if (this.dimensionUnit[property.column.columnType]) {
+          return true
         }
       }
-      return false;
+      return false
     },
-    checkFilterParamShow(pId,measure,type){
-      let property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkFilterParamShow(pId, measure, type) {
+      const property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if(measure && this.filterParam[type]){
+      if (measure && this.filterParam[type]) {
         return this.filterParam[type].includes(measure)
       }
-      return false;
+      return false
     },
-    checkEventPropertyMeasureShow(pId,measureCode){
-      let property = this.eventPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkEventPropertyMeasureShow(pId, measureCode) {
+      const property = this.eventPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if(measureCode){
+      if (measureCode) {
         return this.indicatorMeasure[property.column.columnType].includes(measureCode)
       }
-      return true;
+      return true
     },
-    checkFilterMeasureShow(pId,measureCode){
-      let property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkFilterMeasureShow(pId, measureCode) {
+      const property = this.filterPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if(measureCode){
+      if (measureCode) {
         return this.indicatorMeasure[property.column.columnType].includes(measureCode)
       }
-      return true;
+      return true
     },
-    checkDisplayDimensionMeasureShow(pId,measureCode){
-      let property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
-      if(!property || !property.column){
-        return false;
+    checkDisplayDimensionMeasureShow(pId, measureCode) {
+      const property = this.groupPropertyAllList.filter(i => i.id === pId)[0]
+      if (!property || !property.column) {
+        return false
       }
-      if(measureCode){
+      if (measureCode) {
         return this.filterMeasure[property.column.columnType].includes(measureCode)
       }
-      return true;
-    },
+      return true
+    }
   }
 }
 </script>
