@@ -20,10 +20,10 @@ const assetsCDN = {
   },
   css: [],
   js: [
-    "https://cdn.staticfile.org/vue/2.6.10/vue.min.js",
-    "https://cdn.staticfile.org/vue-router/3.1.3/vue-router.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/vuex/3.1.1/vuex.min.js",
-    "https://cdn.staticfile.org/axios/0.19.0/axios.min.js"
+    'https://cdn.staticfile.org/vue/2.6.10/vue.min.js',
+    'https://cdn.staticfile.org/vue-router/3.1.3/vue-router.min.js',
+    'https://cdn.bootcdn.net/ajax/libs/vuex/3.1.1/vuex.min.js',
+    'https://cdn.staticfile.org/axios/0.19.0/axios.min.js'
   ]
 }
 
@@ -82,7 +82,7 @@ const vueConfig = {
         modifyVars: {
           'primary-color': '#1890FF',
           'layout-color': '#1890FF',
-          'border-radius-base': '2px'
+          'border-radius-base': '4px'
         },
         // DO NOT REMOVE THIS LINE
         javascriptEnabled: true
