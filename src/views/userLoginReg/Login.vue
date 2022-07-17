@@ -47,15 +47,19 @@
         <a-tab-pane key="tab2" tab="手机号登录">
           <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" :message="this.accountLoginErrMsg" />
           <a-form-item>
-            <a-input size="large" type="text" placeholder="手机号" v-decorator="['mobile', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
-              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+            <a-input size="large" type="text" placeholder="手机号" v-decorator="['phone', {initialValue:'18888888888',rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
+              <!--              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>-->
+              <a-select slot="addonBefore" size="large" defaultValue="+86">
+                <a-select-option value="+86">+86</a-select-option>
+                <a-select-option value="+87">+87</a-select-option>
+              </a-select>
             </a-input>
           </a-form-item>
 
           <a-row :gutter="16">
             <a-col class="gutter-row" :span="16">
               <a-form-item>
-                <a-input size="large" type="text" placeholder="验证码" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
+                <a-input size="large" type="text" placeholder="验证码" v-decorator="['smsCode', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
                   <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
                 </a-input>
               </a-form-item>
@@ -213,21 +217,18 @@ export default {
       } = this
 
       state.loginBtn = true
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['mobile', 'captcha']
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['phone', 'smsCode']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         this.loginParams = values
         if (!err) {
           // 是否开启验证码
-          if (this.captchaOpen) {
+          if (this.captchaOpen && customActiveKey === 'tab1') {
             this.$refs.verify.show()
             state.loginBtn = false
             return
           }
           const loginParams = { ...values }
-          delete loginParams.account
-          loginParams.account = values.account
-
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
             .catch(err => this.requestFailed(err))
@@ -256,7 +257,7 @@ export default {
       e.preventDefault()
       const { form: { validateFields }, state } = this
 
-      validateFields(['mobile'], { force: true }, (err, values) => {
+      validateFields(['phone'], { force: true }, (err, values) => {
         if (!err) {
           state.smsSendBtn = true
 
@@ -269,11 +270,11 @@ export default {
           }, 1000)
 
           const hide = this.$message.loading('验证码发送中..', 0)
-          getSmsCaptcha({ mobile: values.mobile }).then(res => {
+          getSmsCaptcha({ phone: values.phone, type: 'Login' }).then(res => {
             setTimeout(hide, 2500)
             this.$notification['success']({
               message: '提示',
-              description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+              description: '验证码获取成功，您的验证码为：' + res.data.smsCode,
               duration: 8
             })
           }).catch(err => {

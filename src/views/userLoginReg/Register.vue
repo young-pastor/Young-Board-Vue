@@ -48,25 +48,18 @@
       </a-form-item>
 
       <a-form-item>
-        <a-input size="large" placeholder="11 位手机号" v-decorator="['mobile', {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]">
+        <a-input size="large" placeholder="11 位手机号" v-decorator="['phone', {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }]">
           <a-select slot="addonBefore" size="large" defaultValue="+86">
             <a-select-option value="+86">+86</a-select-option>
             <a-select-option value="+87">+87</a-select-option>
           </a-select>
         </a-input>
       </a-form-item>
-      <!--<a-input-group size="large" compact>
-            <a-select style="width: 20%" size="large" defaultValue="+86">
-              <a-select-option value="+86">+86</a-select-option>
-              <a-select-option value="+87">+87</a-select-option>
-            </a-select>
-            <a-input style="width: 80%" size="large" placeholder="11 位手机号"></a-input>
-          </a-input-group>-->
 
       <a-row :gutter="16">
         <a-col class="gutter-row" :span="16">
           <a-form-item>
-            <a-input size="large" type="text" placeholder="验证码" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
+            <a-input size="large" type="text" placeholder="验证码" v-decorator="['smsCode', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
@@ -224,7 +217,7 @@ export default {
       e.preventDefault()
       const { form: { validateFields }, state, $message, $notification } = this
 
-      validateFields(['mobile'], { force: true },
+      validateFields(['phone'], { force: true },
         (err, values) => {
           if (!err) {
             state.smsSendBtn = true
@@ -239,11 +232,11 @@ export default {
 
             const hide = $message.loading('验证码发送中..', 0)
 
-            getSmsCaptcha({ mobile: values.mobile }).then(res => {
+            getSmsCaptcha({ phone: values.phone, type: 'Register' }).then(res => {
               setTimeout(hide, 2500)
               $notification['success']({
                 message: '提示',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+                description: '验证码获取成功，您的验证码为：' + res.data.smsCode,
                 duration: 8
               })
             }).catch(err => {
