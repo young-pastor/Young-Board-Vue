@@ -26,6 +26,19 @@ export function login (parameter) {
 }
 
 /**
+ *
+ *
+ * @author Young-Pastor
+ */
+export function recover(parameter) {
+  return axios({
+    url: '/recover',
+    method: 'get',
+    params: parameter
+  })
+}
+
+/**
  * 登出
  *
  * @author Young-Pastor

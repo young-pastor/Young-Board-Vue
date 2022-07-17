@@ -10,7 +10,7 @@ import { ACCESS_TOKEN, ALL_APPS_MENU } from '@/store/mutation-types'
 import { Modal, notification } from 'ant-design-vue' // NProgress Configuration
 import { timeFix } from '@/utils/util'/// es/notification
 NProgress.configure({ showSpinner: false })
-const whiteList = ['login', 'register', 'registerResult'] // no redirect whitelist
+const whiteList = ['login', 'register', 'registerResult', 'recover', 'resetPwd'] // no redirect whitelist
 // 无默认首页的情况
 const defaultRoutePath = '/welcome'
 

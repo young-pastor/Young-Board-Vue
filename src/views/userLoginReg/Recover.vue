@@ -12,43 +12,27 @@
         :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
         @change="handleTabClick"
       >
-        <a-tab-pane key="tab1" tab="账号密码登录">
+        <a-tab-pane key="tab1" tab="通过邮箱找回">
           <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" :message="this.accountLoginErrMsg" />
 
           <a-form-item>
             <a-input
               size="large"
-              type="text"
-              placeholder="账号"
+              type="email"
+              placeholder="邮箱"
               v-decorator="[
-                'account',
-                { initialValue:'admin', rules: [{ required: true, message: '请输入帐户名' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+                'email',
+                { rules: [{ required: true, message: '请输入邮箱' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
               ]"
             >
-              <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-
-          <a-form-item>
-            <a-input
-              size="large"
-              type="password"
-              autocomplete="false"
-              placeholder="密码"
-              v-decorator="[
-                'password',
-                { initialValue:'123456', rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
-              ]"
-            >
-              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+              <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane key="tab2" tab="手机号登录">
+        <a-tab-pane key="tab2" tab="通过手机号找回">
           <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" :message="this.accountLoginErrMsg" />
           <a-form-item>
-            <a-input size="large" type="text" placeholder="手机号" v-decorator="['phone', {initialValue:'18888888888',rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
-              <!--              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>-->
+            <a-input size="large" type="text" placeholder="手机号" v-decorator="['phone', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
               <a-select slot="addonBefore" size="large" defaultValue="+86">
                 <a-select-option value="+86">+86</a-select-option>
                 <a-select-option value="+87">+87</a-select-option>
@@ -76,17 +60,6 @@
           </a-row>
         </a-tab-pane>
       </a-tabs>
-
-      <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox>
-        <!--        <router-link-->
-        <!--          :to="{ name: 'recover', params: { user: 'aaa'} }"-->
-        <!--          class="forge-password"-->
-        <!--          style="float: right;"-->
-        <!--        >忘记密码</router-link>-->
-        <router-link class="forge-password" :to="{ name: 'recover' }" style="float: right;">忘记密码</router-link>
-      </a-form-item>
-
       <a-form-item>
         <Verify
           @success="verifySuccess"
@@ -119,7 +92,7 @@
         <a>
           <a-icon class="item-icon" type="weibo-circle"></a-icon>
         </a>
-        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
+        <router-link class="register" :to="{ name: 'login' }">返回登录</router-link>
       </div>
     </a-form>
 
@@ -218,7 +191,7 @@ export default {
       } = this
 
       state.loginBtn = true
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['account'] : ['phone', 'smsCode']
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['account', 'password'] : ['phone', 'smsCode']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         this.loginParams = values
