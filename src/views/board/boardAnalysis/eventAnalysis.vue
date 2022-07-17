@@ -58,7 +58,7 @@
               <a-col :md="2" :sm="24" v-if="checkEventPropertyMeasureShow(analysisEvent.property.propertyId)">
                 <a-form-item label="">
                   <a-select v-model="analysisEvent.property.measure" placeholder="请选择">
-                    <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown" :value="item.code" v-if="checkFilterMeasureShow(analysisEvent.property.propertyId,item.code)">{{
+                    <a-select-option v-for="(item,i4) in measureTypeDictTypeDropDown" :value="item.code" v-if="checkEventPropertyMeasureShow(analysisEvent.property.propertyId,item.code)">{{
                       item.name
                     }}
                     </a-select-option>
@@ -88,22 +88,24 @@
                 </a-select>
               </a-form-item>
             </a-col>
+
             <a-col :md="2" :sm="24" v-if="checkFilterMeasureShow(aFilter.propertyId)">
               <a-form-item label="">
                 <a-select v-model="aFilter.measure" placeholder="请选择">
-                  <a-select-option v-for="(item,i7) in filterTypeDictTypeDropDown" :value="item.code">
+                  <a-select-option v-for="(item,i7) in filterTypeDictTypeDropDown" :value="item.code" v-if="checkFilterMeasureShow(aFilter.propertyId,item.code)">
                     {{ item.name }}
                   </a-select-option>
+
                 </a-select>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.propertyId,aFilter.measure,'INPUT')">
-              <a-form-item label="" >
+              <a-form-item>
                 <a-input v-model="aFilter.value" />
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="12" v-if="checkFilterParamShow(aFilter.propertyId,aFilter.measure,'RANGE')">
-              <a-form-item label="" >
+              <a-form-item>
                 <a-range-picker :style="{width: '350px'}" showTime v-model="aFilter.value"/>
               </a-form-item>
             </a-col>
@@ -483,7 +485,7 @@ export default {
         return false
       }
       if (measureCode) {
-        return this.indicatorMeasure[property.column.columnType].includes(measureCode)
+        return this.filterMeasure[property.column.columnType].includes(measureCode)
       }
       return true
     },
