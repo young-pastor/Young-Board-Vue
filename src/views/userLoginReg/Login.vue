@@ -218,7 +218,7 @@ export default {
       } = this
 
       state.loginBtn = true
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['account'] : ['phone', 'smsCode']
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['account','password'] : ['phone', 'smsCode']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         this.loginParams = values
